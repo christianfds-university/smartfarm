@@ -34,7 +34,7 @@ export class PropRuralComponent implements OnInit {
     // new ButtonOption("Manejo Integrado Pragas e Doenças", "", "primary"),
     // new ButtonOption("Dados Pulverização", "", "primary"),
     // new ButtonOption("Potencial Produtivo Safra", "", "primary"),
-    new ButtonOption("Sensores", "#", "primary"),
+    new ButtonOption("Sensores", "/sensors", "primary"),
     new ButtonOption("EarthEngine", "#", "primary"),
   	new ButtonOption("Drone", "#", "primary"),
   	new ButtonOption("Sala De Controle (Cockpit)", "/cockpit", "primary")

@@ -28,3 +28,12 @@
 		</app-gauge>
 	</mat-grid-tile>
 </mat-grid-list>
+
+<mat-grid-list cols="2">
+	<mat-grid-tile>
+		<div style="width: 100%; height: 100%"><ngx-line-chart [dataSets]="DataSetTemp" [xLabelFunction]="formatXAxisValue.bind(this)"></ngx-line-chart></div>
+	</mat-grid-tile>
+	<mat-grid-tile>
+		<div style="width: 100%; height: 100%"><ngx-line-chart [dataSets]="DataSetUmidade" [xLabelFunction]="formatXAxisValue.bind(this)"></ngx-line-chart></div>
+	</mat-grid-tile>
+</mat-grid-list>
