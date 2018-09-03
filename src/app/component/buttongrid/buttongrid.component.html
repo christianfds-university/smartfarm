@@ -1,0 +1,9 @@
+<mat-grid-list cols="5">
+	<mat-grid-tile *ngFor="let opt of data">
+		<a routerLink="{{ opt.link }}">
+			<button mat-raised-button color="{{opt.color}}">
+				{{ opt.text }}
+			</button>
+		</a>
+	</mat-grid-tile>
+</mat-grid-list>

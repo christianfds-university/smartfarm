@@ -1,0 +1,30 @@
+<mat-grid-list cols="4">
+	<mat-grid-tile>
+		<app-gauge 
+			[value]="21" 
+			[label]="'Temperatura'"
+			[appendText]="'°C'">
+		</app-gauge>
+	</mat-grid-tile>
+	<mat-grid-tile>
+		<app-gauge 
+			[value]="21" 
+			[label]="'Temperatura do Solo'"
+			[appendText]="'°C'">
+		</app-gauge>
+	</mat-grid-tile>
+	<mat-grid-tile>
+		<app-gauge 
+			[value]="13" 
+			[label]="'Umidade'"
+			[appendText]="'g/Kg'">
+		</app-gauge>
+	</mat-grid-tile>
+	<mat-grid-tile>
+		<app-gauge 
+			[value]="12" 
+			[label]="'Umidade do Solo'"
+			[appendText]="'g/Kg'">
+		</app-gauge>
+	</mat-grid-tile>
+</mat-grid-list>
