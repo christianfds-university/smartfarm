@@ -1,0 +1,20 @@
+<!-- <mat-nav-list>
+	<div *ngFor="let link of equations">
+		<a mat-list-item [ngx-scroll-to]="link.position">{{ link.name }} </a>
+	</div>
+</mat-nav-list>
+ -->
+<mat-accordion>
+	<mat-expansion-panel norm-panel *ngFor="let eq of equations;" [attr.data-index]="i">
+		<mat-expansion-panel-header id="eq.position">
+			<mat-panel-title>
+				#{{eq.position}} - {{eq.name}} 
+			</mat-panel-title>
+			<mat-panel-description>
+			</mat-panel-description>
+		</mat-expansion-panel-header>
+
+		{{eq.equacao}}
+	</mat-expansion-panel>
+
+</mat-accordion>

@@ -22,6 +22,7 @@
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
+    "@nicky-lenaers/ngx-scroll-to": "^1.0.0",
     "core-js": "^2.5.4",
     "ngx-gauge": "^1.0.0-beta.4",
     "ngx-line-chart": "^1.0.0",
