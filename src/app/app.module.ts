@@ -22,6 +22,7 @@ import { HomeComponent } from './view/home/home.component';
 import { PropRuralComponent } from './view/prop-rural/prop-rural.component';
 import { CockpitComponent } from './view/cockpit/cockpit.component';
 import { SensorsComponent } from './view/sensors/sensors.component';
+import { PropRuralListComponent } from './view/prop-rural-list/prop-rural-list.component';
 import { EqComponent } from './view/eq/eq.component';
 
 // const routes: Routes = [
@@ -33,9 +34,10 @@ import { EqComponent } from './view/eq/eq.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'proprural', component: PropRuralComponent },
-  { path: 'cockpit', component: CockpitComponent },
-  { path: 'sensors', component: SensorsComponent },
+  { path: 'proprural', component: PropRuralListComponent },
+  { path: 'proprural/:propid', component: PropRuralComponent },
+  { path: 'proprural/:propid/cockpit', component: CockpitComponent },
+  { path: 'proprural/:propid/sensors', component: SensorsComponent },
   { path: 'eq', component: EqComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
@@ -50,6 +52,7 @@ const routes: Routes = [
     GaugeComponent,
     SensorsComponent,
     EqComponent
+    PropRuralListComponent
   ],
   imports: [
     BrowserModule,

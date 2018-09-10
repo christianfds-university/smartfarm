@@ -7,9 +7,9 @@ class Sensor {
 }
 
 @Component({
-  selector: 'app-sensors',
-  templateUrl: './sensors.component.html',
-  styleUrls: ['./sensors.component.css']
+	selector: 'app-sensors',
+	templateUrl: './sensors.component.html',
+	styleUrls: ['./sensors.component.css']
 })
 export class SensorsComponent implements OnInit {
 
@@ -21,9 +21,9 @@ export class SensorsComponent implements OnInit {
 		new Sensor("-456199987", "44519957")
 	]
 
-  constructor() { }
+	constructor() { }
 
-  ngOnInit() {
-  }
+	ngOnInit() {
+	}
 
 }
