@@ -16,6 +16,7 @@ import { CockpitComponent } from './view/cockpit/cockpit.component';
 import { ButtongridComponent } from './component/buttongrid/buttongrid.component';
 import { GaugeComponent } from './component/gauge/gauge.component';
 import { SensorsComponent } from './view/sensors/sensors.component';
+import { PropRuralListComponent } from './view/prop-rural-list/prop-rural-list.component';
 
 // const routes: Routes = [
 //   { path: 'create', component: CreateComponent },
@@ -26,9 +27,10 @@ import { SensorsComponent } from './view/sensors/sensors.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'proprural', component: PropRuralComponent },
-  { path: 'cockpit', component: CockpitComponent },
-  { path: 'sensors', component: SensorsComponent },
+  { path: 'proprural', component: PropRuralListComponent },
+  { path: 'proprural/:propid', component: PropRuralComponent },
+  { path: 'proprural/:propid/cockpit', component: CockpitComponent },
+  { path: 'proprural/:propid/sensors', component: SensorsComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 
@@ -40,7 +42,8 @@ const routes: Routes = [
     CockpitComponent,
     ButtongridComponent,
     GaugeComponent,
-    SensorsComponent
+    SensorsComponent,
+    PropRuralListComponent
   ],
   imports: [
     BrowserModule,
