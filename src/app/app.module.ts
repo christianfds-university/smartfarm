@@ -51,7 +51,7 @@ const routes: Routes = [
     ButtongridComponent,
     GaugeComponent,
     SensorsComponent,
-    EqComponent
+    EqComponent,
     PropRuralListComponent
   ],
   imports: [
