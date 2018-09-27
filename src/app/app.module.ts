@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 // Angular Material
 import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatToolbarModule, MatGridListModule, MatExpansionModule, MatTableModule, MatListModule, MatFormFieldModule, MatInputModule } from '@angular/material'
@@ -25,23 +27,18 @@ import { SensorsComponent } from './view/sensors/sensors.component';
 import { PropRuralListComponent } from './view/prop-rural-list/prop-rural-list.component';
 import { EqComponent } from './view/eq/eq.component';
 import { LoginComponent } from './view/login/login.component';
-
-// const routes: Routes = [
-//   { path: 'create', component: CreateComponent },
-//   { path: 'edit/:id', component: EditComponent },
-//   { path: 'list', component: ListComponent },
-//   { path: '', redirectTo: '/list', pathMatch: 'full'}
-// ];
+import { RegisterComponent } from './view/register/register.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'proprural', component: PropRuralListComponent },
   { path: 'proprural/:propid', component: PropRuralComponent },
   { path: 'proprural/:propid/cockpit', component: CockpitComponent },
   { path: 'proprural/:propid/sensors', component: SensorsComponent },
   { path: 'eq', component: EqComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full'}
+  { path: '', redirectTo: '/login', pathMatch: 'full'}
 ];
 
 @NgModule({
@@ -55,10 +52,13 @@ const routes: Routes = [
     SensorsComponent,
     EqComponent,
     PropRuralListComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatToolbarModule, MatGridListModule, MatExpansionModule, MatTableModule, MatListModule, MatFormFieldModule, MatInputModule,
     NgxGaugeModule,

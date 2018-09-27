@@ -1,19 +1,26 @@
 <div class="myFlex">
 	
-<span class="spacer"></span>
+	<span class="spacer"></span>
 
-<mat-card class="form-holder">
-	<form class="myForm align-r">
-		<mat-form-field class="fullW-field">
-			<input matInput placeholder="Email">
-		</mat-form-field>
-		<mat-form-field class="fullW-field">
-			<input matInput placeholder="Senha">
-		</mat-form-field>
-		<button mat-raised-button color="primary">Login</button>
-	</form>
-</mat-card>
+	<mat-card class="form-holder">
+		<form (ngSubmit)="login()" class="myForm align-r" #loginForm="ngForm">
+			<div class="fullW-field" *ngIf="message !== ''">
+				{{message}}
+			</div>
+			<mat-form-field class="fullW-field">
+				<input matInput placeholder="Email" [(ngModel)]="loginData.email" name="email" required>
+			</mat-form-field>
+			<mat-form-field class="fullW-field">
+				<input matInput placeholder="Senha" [(ngModel)]="loginData.password" name="password" required type="password">
+			</mat-form-field>
+			<button mat-raised-button color="primary" [disabled]="!loginForm.form.valid">Login</button>
 
-<span class="spacer"></span>
+			<p>
+				Não tem uma conta? <a [routerLink]="['/register']">Se registre aqui</a>!
+			</p>
+		</form>
+	</mat-card>
+
+	<span class="spacer"></span>
 
 </div>

@@ -17,11 +17,11 @@
         <mat-icon>settings</mat-icon>
         <span>Configurações</span>
       </button>
-      <button mat-menu-item routerlink="login">
+      <button mat-menu-item routerlink="login" *ngIf="!loggedin">
         <mat-icon>exit_to_app</mat-icon>
         <span>Login</span>
       </button>
-      <button mat-menu-item routerlink="logout">
+      <button mat-menu-item (click)="logout()" *ngIf="loggedin">
         <mat-icon>power_settings_new</mat-icon>
         <span>Sair</span>
       </button>
@@ -32,5 +32,5 @@
 
 
 <div id="main">
-  <router-outlet></router-outlet>
+  <router-outlet (activate)="changeOfRoutes()"></router-outlet>
 </div>
