@@ -1,5 +1,10 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
+    <button mat-icon-button (click)="backClicked()">
+      <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+
+    <span class="spacer"></span>
     <a routerLink="/"><span>SmartFarm</span></a>
 
     <span class="spacer"></span>
@@ -12,8 +17,12 @@
         <mat-icon>settings</mat-icon>
         <span>Configurações</span>
       </button>
-      <button mat-menu-item routerlink="logout">
+      <button mat-menu-item routerlink="login">
         <mat-icon>exit_to_app</mat-icon>
+        <span>Login</span>
+      </button>
+      <button mat-menu-item routerlink="logout">
+        <mat-icon>power_settings_new</mat-icon>
         <span>Sair</span>
       </button>
     </mat-menu>

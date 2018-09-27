@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Angular Material
-import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatToolbarModule, MatGridListModule, MatExpansionModule, MatTableModule, MatListModule } from '@angular/material'
+import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatToolbarModule, MatGridListModule, MatExpansionModule, MatTableModule, MatListModule, MatFormFieldModule, MatInputModule } from '@angular/material'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -24,6 +24,7 @@ import { CockpitComponent } from './view/cockpit/cockpit.component';
 import { SensorsComponent } from './view/sensors/sensors.component';
 import { PropRuralListComponent } from './view/prop-rural-list/prop-rural-list.component';
 import { EqComponent } from './view/eq/eq.component';
+import { LoginComponent } from './view/login/login.component';
 
 // const routes: Routes = [
 //   { path: 'create', component: CreateComponent },
@@ -33,6 +34,7 @@ import { EqComponent } from './view/eq/eq.component';
 // ];
 
 const routes: Routes = [
+  { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'proprural', component: PropRuralListComponent },
   { path: 'proprural/:propid', component: PropRuralComponent },
@@ -52,12 +54,13 @@ const routes: Routes = [
     GaugeComponent,
     SensorsComponent,
     EqComponent,
-    PropRuralListComponent
+    PropRuralListComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatToolbarModule, MatGridListModule, MatExpansionModule, MatTableModule, MatListModule,
+    MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatToolbarModule, MatGridListModule, MatExpansionModule, MatTableModule, MatListModule, MatFormFieldModule, MatInputModule,
     NgxGaugeModule,
     NgxLineChartModule,
     ScrollToModule.forRoot(),

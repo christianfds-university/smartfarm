@@ -25,6 +25,8 @@ export class PropRuralComponent implements OnInit {
 
 		this.subscription = this.activeRoute.paramMap.subscribe(params => {
 			if(params.get('propid')) {
+
+				
 				this.PropId = params.get('propid');
 
 				this.options.push(new ButtonOption("Sensores", "sensors", "primary"));
