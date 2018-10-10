@@ -36,8 +36,8 @@ import { CockpitComponent } from './view/cockpit/cockpit.component';
 import { SensorsComponent } from './view/sensors/sensors.component';
 import { PropRuralListComponent } from './view/prop-rural-list/prop-rural-list.component';
 import { EqComponent } from './view/eq/eq.component';
-import { LoginComponent } from './view/login/login.component';
-import { RegisterComponent } from './view/register/register.component';
+import { LoginComponent } from './view/user-login/login.component';
+import { RegisterComponent } from './view/user-register/register.component';
 
 const routes: Routes = [
 { path: 'login', component: LoginComponent },
