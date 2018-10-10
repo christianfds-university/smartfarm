@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { AuthenticationService } from '../../authentication.service';
@@ -13,13 +13,13 @@ import { AuthenticationService } from '../../authentication.service';
 })
 export class LoginComponent implements OnInit {
 
-	loginData = { email:'', password:'' };
+	loginData = { email: '', password: '' };
 	message = '';
 	data: any;
 
 	@Output() loginChanged: EventEmitter<any> = new EventEmitter();
 
-	constructor(private http: HttpClient, private router: Router, private auth: AuthenticationService) { 
+	constructor(private http: HttpClient, private router: Router, private auth: AuthenticationService) {
 
 		if (this.auth.hasToken()) {
 			this.router.navigate(['home']);
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
 	}
 
 	login() {
-		this.http.post('/api/login',this.loginData).subscribe(resp => {
+		this.http.post('/api/login', this.loginData).subscribe(resp => {
 			this.data = resp;
 			this.auth.saveToken(this.data.token);
 			this.loginChanged.emit(null);

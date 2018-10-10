@@ -5,8 +5,8 @@ require('../config/passport')(passport);
 var express = require('express');
 var jwt = require('jsonwebtoken');
 var router = express.Router();
-var User = require("../models/User");
-var Book = require("../models/Propriedade");
+var User = require('../models/User');
+var Book = require('../models/Propriedade');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

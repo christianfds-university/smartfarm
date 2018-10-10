@@ -17,8 +17,8 @@ export class AuthenticationService {
 		return this.token;
 	}
 
-	public hasToken(): boolean{
-		return this.getToken() != undefined;
+	public hasToken(): boolean {
+		return this.getToken() !== undefined;
 	}
 
 	public saveToken(token: string): void {

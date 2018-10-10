@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 class Sensor {
 	constructor(
 		public lat: string,
-		public lon: string){ }
+		public lon: string) { }
 }
 
 @Component({
@@ -14,12 +14,12 @@ class Sensor {
 export class SensorsComponent implements OnInit {
 
 	sensores = [
-		new Sensor("-456199987", "44519957"),
-		new Sensor("-456199987", "44519957"),
-		new Sensor("-456199987", "44519957"),
-		new Sensor("-456199987", "44519957"),
-		new Sensor("-456199987", "44519957")
-	]
+		new Sensor('-456199987', '44519957'),
+		new Sensor('-456199987', '44519957'),
+		new Sensor('-456199987', '44519957'),
+		new Sensor('-456199987', '44519957'),
+		new Sensor('-456199987', '44519957')
+	];
 
 	constructor() { }
 

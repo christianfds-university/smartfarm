@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { AuthenticationService } from '../../authentication.service';
@@ -9,7 +9,7 @@ import { AuthenticationService } from '../../authentication.service';
 class PropRural {
 	constructor(
 		public id: string,
-		public name: string){ }
+		public name: string) { }
 }
 
 @Component({
@@ -19,33 +19,33 @@ class PropRural {
 })
 export class PropRuralListComponent implements OnInit {
 
-	propriedades : any;
+	propriedades: any;
 
 	constructor(private http: HttpClient, private router: Router, private auth: AuthenticationService) { }
 
 	ngOnInit() {
-		let httpOptions = {
+		const httpOptions = {
 			headers: new HttpHeaders({ 'Authorization': this.auth.getToken() })
 		};
 		this.http.get('/api/propriedade', httpOptions).subscribe(data => {
-			//TODO
+			// TODO
 			// this.propriedades.push(data.id);
 
 
 
 			console.log(this.propriedades);
 		}, err => {
-			if(err.status === 401) {
+			if (err.status === 401) {
 				this.router.navigate(['login']);
 			}
 
 			this.propriedades = [
-			new PropRural("123","Propriedade debug Norte"),
-			new PropRural("123","Propriedade debug Sul"),
-			new PropRural("123","Propriedade debug Leste"),
-			new PropRural("123","Propriedade debug Oeste"),
-			new PropRural("123","Propriedade debug Nordeste")
-			]
+				new PropRural('123', 'Propriedade debug Norte'),
+				new PropRural('123', 'Propriedade debug Sul'),
+				new PropRural('123', 'Propriedade debug Leste'),
+				new PropRural('123', 'Propriedade debug Oeste'),
+				new PropRural('123', 'Propriedade debug Nordeste')
+			];
 		});
 	}
 

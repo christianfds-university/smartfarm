@@ -5,7 +5,7 @@ class ButtonOption {
 	constructor(
 		public text: string,
 		public link: string,
-		public color: string){ }
+		public color: string) { }
 }
 
 @Component({
@@ -16,11 +16,11 @@ class ButtonOption {
 export class HomeComponent implements OnInit {
 
   options = [
-  	new ButtonOption("Propriedade Rural", "/proprural", "primary"),
-  	// new ButtonOption("Cultivares", "/", "primary"),
-  	new ButtonOption("Equações", "/eq", "primary"),
-  	new ButtonOption("Usuários", "#", "accent")
-  ]
+  	new ButtonOption('Propriedade Rural', '/proprural', 'primary'),
+  	new ButtonOption('Cultivares', '/', 'primary'),
+  	new ButtonOption('Equações', '/eq', 'primary'),
+  	new ButtonOption('Usuários', '#', 'accent')
+  ];
 
   constructor() { }
 

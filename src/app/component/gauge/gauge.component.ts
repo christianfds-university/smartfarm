@@ -7,14 +7,14 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class GaugeComponent implements OnInit {
 
-    gaugeType = "semi";
+    gaugeType = 'semi';
 	@Input() value: number;
 	@Input() label: any;
 	@Input() appendText: any;
 
-	gaugeValue : any;
-	gaugeLabel : any;
-	gaugeAppendText : any;
+	gaugeValue: any;
+	gaugeLabel: any;
+	gaugeAppendText: any;
 
 	constructor() { }
 

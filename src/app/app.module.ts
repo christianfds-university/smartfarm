@@ -5,7 +5,17 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 // Angular Material
-import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatToolbarModule, MatGridListModule, MatExpansionModule, MatTableModule, MatListModule, MatFormFieldModule, MatInputModule } from '@angular/material'
+import { MatMenuModule,
+         MatButtonModule,
+         MatIconModule,
+         MatCardModule,
+         MatToolbarModule,
+         MatGridListModule,
+         MatExpansionModule,
+         MatTableModule,
+         MatListModule,
+         MatFormFieldModule,
+         MatInputModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -30,41 +40,51 @@ import { LoginComponent } from './view/login/login.component';
 import { RegisterComponent } from './view/register/register.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'proprural', component: PropRuralListComponent },
-  { path: 'proprural/:propid', component: PropRuralComponent },
-  { path: 'proprural/:propid/cockpit', component: CockpitComponent },
-  { path: 'proprural/:propid/sensors', component: SensorsComponent },
-  { path: 'eq', component: EqComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full'}
+{ path: 'login', component: LoginComponent },
+{ path: 'register', component: RegisterComponent },
+{ path: 'home', component: HomeComponent },
+{ path: 'proprural', component: PropRuralListComponent },
+{ path: 'proprural/:propid', component: PropRuralComponent },
+{ path: 'proprural/:propid/cockpit', component: CockpitComponent },
+{ path: 'proprural/:propid/sensors', component: SensorsComponent },
+{ path: 'eq', component: EqComponent },
+{ path: '', redirectTo: '/login', pathMatch: 'full'}
 ];
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    PropRuralComponent,
-    CockpitComponent,
-    ButtongridComponent,
-    GaugeComponent,
-    SensorsComponent,
-    EqComponent,
-    PropRuralListComponent,
-    LoginComponent,
-    RegisterComponent
+  AppComponent,
+  HomeComponent,
+  PropRuralComponent,
+  CockpitComponent,
+  ButtongridComponent,
+  GaugeComponent,
+  SensorsComponent,
+  EqComponent,
+  PropRuralListComponent,
+  LoginComponent,
+  RegisterComponent
   ],
   imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatToolbarModule, MatGridListModule, MatExpansionModule, MatTableModule, MatListModule, MatFormFieldModule, MatInputModule,
-    NgxGaugeModule,
-    NgxLineChartModule,
-    ScrollToModule.forRoot(),
-    RouterModule.forRoot(routes)
+  BrowserModule,
+  FormsModule,
+  HttpClientModule,
+  BrowserAnimationsModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatGridListModule,
+    MatExpansionModule,
+    MatTableModule,
+    MatListModule,
+    MatFormFieldModule,
+    MatInputModule,
+  NgxGaugeModule,
+  NgxLineChartModule,
+  ScrollToModule.forRoot(),
+  RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]
