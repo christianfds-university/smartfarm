@@ -5,8 +5,9 @@ require('../config/passport')(passport);
 var express = require('express');
 var jwt = require('jsonwebtoken');
 var router = express.Router();
+
 var User = require('../models/User');
-var Book = require('../models/Propriedade');
+var Propriedade = require('../models/Propriedade');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -47,7 +48,7 @@ router.post('/login', function(req, res) {
           // if user is found and password is right create a token
           var token = jwt.sign(user.toJSON(), config.secret);
           // return the information including token as JSON
-          res.json({success: true, token: 'JWT ' + token});
+          res.json({ success: true, token: 'bearer ' + token, userid: user.id});
         } else {
           res.status(401).send({success: false, msg: 'Falha na autenticação'});
         }
@@ -59,14 +60,24 @@ router.post('/login', function(req, res) {
 /*
 * Cria uma nova propriedade
 */
-router.post('/propriedade', passport.authenticate('jwt', { session: false }), function(req, res) {
-	var token = getToken(req.headers);
+// router.post('/propriedade', passport.authenticate('jwt', { session: false }), function(req, res) {
+router.post('/propriedade', function(req, res) {
+  var token = getToken(req.body);
+
+  // console.log("body authorization");
+  // console.log(req.body.authorization);
+
+  // console.log("token");
+  // console.log(token);
+
 	if (token) {
 		console.log(req.body);
-		var newPropriedade = new Propriedade({
+    /*
+    var newPropriedade = new Propriedade({
 			nome: req.body.nome,
 			descricao: req.body.descricao,
-			dono: req.body.dono
+      dono: req.body.dono,
+      loc: req.body.loc
 		});
 
 		newPropriedade.save(function(err) {
@@ -74,7 +85,9 @@ router.post('/propriedade', passport.authenticate('jwt', { session: false }), fu
 				return res.json({success: false, msg: 'Falha na criação.'});
 			}
 			res.json({success: true, msg: 'Propriedade criada.'});
-		});
+    });
+    */
+    res.json({ success: 'maybe' }) 
 	} 
 	else {
 		return res.status(403).send({success: false, msg: 'Não autorizado.'});

@@ -38,12 +38,14 @@ import { PropRuralListComponent } from './view/prop-rural-list/prop-rural-list.c
 import { EqComponent } from './view/eq/eq.component';
 import { LoginComponent } from './view/user-login/login.component';
 import { RegisterComponent } from './view/user-register/register.component';
+import { PropRuralRegisterComponent } from './view/prop-rural-register/prop-rural-register.component';
 
 const routes: Routes = [
 { path: 'login', component: LoginComponent },
 { path: 'register', component: RegisterComponent },
 { path: 'home', component: HomeComponent },
 { path: 'proprural', component: PropRuralListComponent },
+{ path: 'proprural-reg', component: PropRuralRegisterComponent},
 { path: 'proprural/:propid', component: PropRuralComponent },
 { path: 'proprural/:propid/cockpit', component: CockpitComponent },
 { path: 'proprural/:propid/sensors', component: SensorsComponent },
@@ -63,7 +65,8 @@ const routes: Routes = [
   EqComponent,
   PropRuralListComponent,
   LoginComponent,
-  RegisterComponent
+  RegisterComponent,
+  PropRuralRegisterComponent
   ],
   imports: [
   BrowserModule,

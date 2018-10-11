@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class AuthenticationService {
 	private token: string;
+	private userId: string;
 
 	constructor(private http: HttpClient, private router: Router) {}
 
@@ -18,7 +19,7 @@ export class AuthenticationService {
 	}
 
 	public hasToken(): boolean {
-		return this.getToken() !== undefined;
+		return this.getToken() !== undefined && this.getToken() !== null;
 	}
 
 	public saveToken(token: string): void {
@@ -28,6 +29,20 @@ export class AuthenticationService {
 
 	public logout(): void {
 		this.token = '';
+		this.userId = '';
 		window.localStorage.removeItem('jwtToken');
 	}
+
+	public getUserId(): string {
+		if (!this.userId) {
+			this.userId = localStorage.getItem('userId');
+		}
+		return this.userId;
+	}
+
+	public saveUserId(userId: string) {
+		localStorage.setItem('userId', userId);
+		this.userId = userId;
+	}
+
 }

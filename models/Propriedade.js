@@ -13,6 +13,17 @@ var PropriedadeSchema = new Schema({
   dono: {
     type: String,
     required: true
+  },
+  location: {
+    type: {
+      type: String,
+      enum: ['Point'], // 'location.type' must be 'Point'
+      required: true
+    },
+    coordinates: {
+      type: [Number],
+      required: true
+    }
   }
 });
 

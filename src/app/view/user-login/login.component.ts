@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { AuthenticationService } from '../../authentication.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'app-login',
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
 	constructor(private http: HttpClient, private router: Router, private auth: AuthenticationService) {
 
 		if (this.auth.hasToken()) {
+			// console.log('Tem o token ' + this.auth.getToken());
 			this.router.navigate(['home']);
 		}
 
@@ -32,8 +34,14 @@ export class LoginComponent implements OnInit {
 
 	login() {
 		this.http.post('/api/login', this.loginData).subscribe(resp => {
+
+			if (!environment.production) {
+				console.log(resp);
+			}
 			this.data = resp;
+
 			this.auth.saveToken(this.data.token);
+			this.auth.saveUserId(this.data);
 			this.loginChanged.emit(null);
 			this.router.navigate(['home']);
 		}, err => {
