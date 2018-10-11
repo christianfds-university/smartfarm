@@ -64,31 +64,27 @@ router.post('/login', function(req, res) {
 router.post('/propriedade', function(req, res) {
   var token = getToken(req.body);
 
-  // console.log("body authorization");
-  // console.log(req.body.authorization);
-
-  // console.log("token");
-  // console.log(token);
-
 	if (token) {
-		console.log(req.body);
-    /*
+    let data = req.body.data;
+    // /*
     var newPropriedade = new Propriedade({
-			nome: req.body.nome,
-			descricao: req.body.descricao,
-      dono: req.body.dono,
-      loc: req.body.loc
+			nome: data.nome,
+			descricao: data.desc,
+      dono: data.dono,
+      location: {
+        type: 'Point',
+        coordinates: [data.loc.x, data.loc.y]
+      }
 		});
 
-		newPropriedade.save(function(err) {
+    newPropriedade.save(function(err) {
 			if (err) {
+        console.log(err);
 				return res.json({success: false, msg: 'Falha na criação.'});
 			}
 			res.json({success: true, msg: 'Propriedade criada.'});
     });
-    */
-    res.json({ success: 'maybe' }) 
-	} 
+  } 
 	else {
 		return res.status(403).send({success: false, msg: 'Não autorizado.'});
 	}
@@ -98,13 +94,17 @@ router.post('/propriedade', function(req, res) {
 * Lista propriedades
 */
 //TODO usar token pra puxar lista de propriedades da qual o usuário seja dono
-router.get('/propridade', passport.authenticate('jwt', { session: false }), function(req, res) {
+// router.get('/propridade', passport.authenticate('jwt', { session: false }), function(req, res) {
+router.get('/propriedade', function(req, res) {
   var token = getToken(req.headers);
+ 
   if (token) {
-    Propriedade.find(function (err, books) {
+
+    Propriedade.find({'dono': req.headers.userid}, function (err, books) {
       if (err) return next(err);
       res.json(books);
     });
+
   } else {
     return res.status(403).send({success: false, msg: 'Não autorizado.'});
   }

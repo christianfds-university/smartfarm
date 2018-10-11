@@ -6,14 +6,18 @@
 	<mat-expansion-panel *ngFor="let prop of propriedades; let i = index" [attr.data-index]="i">
 		<mat-expansion-panel-header>
 			<mat-panel-title>
-				{{prop.name}}
+				{{prop.nome}}
 			</mat-panel-title>
 			<mat-panel-description>
 			</mat-panel-description>
 		</mat-expansion-panel-header>
 
-		Descrição
-		<a mat-flat-button [routerLink]="['/proprural', prop.id]">Detalhes</a>
+		<div class="myFlex">
+			<div class="flexItem">{{prop.desc}}</div>
+			<div class="flexItem" style="text-align: right">
+				<a mat-flat-button [routerLink]="['/proprural', prop.id]">Detalhes</a>
+			</div>
+		</div>
 	</mat-expansion-panel>
 
 </mat-accordion>

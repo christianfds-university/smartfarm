@@ -28,7 +28,8 @@ export class PropRuralComponent implements OnInit {
 
 				this.PropId = params.get('propid');
 
-				this.options.push(new ButtonOption('Sensores', 'sensors', 'primary'));
+				// this.options.push(new ButtonOption('Sensores', 'sensors', 'primary'));
+				this.options.push(new ButtonOption('Talhão', 'sensors', 'primary'));
 				this.options.push(new ButtonOption('EarthEngine', '#', 'primary'));
 				this.options.push(new ButtonOption('Drone', '#', 'primary'));
 				this.options.push(new ButtonOption('Sala De Controle (Cockpit)', 'cockpit', 'primary'));

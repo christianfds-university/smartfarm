@@ -21,9 +21,7 @@ export class LoginComponent implements OnInit {
 	@Output() loginChanged: EventEmitter<any> = new EventEmitter();
 
 	constructor(private http: HttpClient, private router: Router, private auth: AuthenticationService) {
-
 		if (this.auth.hasToken()) {
-			// console.log('Tem o token ' + this.auth.getToken());
 			this.router.navigate(['home']);
 		}
 
@@ -34,14 +32,10 @@ export class LoginComponent implements OnInit {
 
 	login() {
 		this.http.post('/api/login', this.loginData).subscribe(resp => {
-
-			if (!environment.production) {
-				console.log(resp);
-			}
 			this.data = resp;
 
 			this.auth.saveToken(this.data.token);
-			this.auth.saveUserId(this.data);
+			this.auth.saveUserId(this.data.userid);
 			this.loginChanged.emit(null);
 			this.router.navigate(['home']);
 		}, err => {

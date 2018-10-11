@@ -30,7 +30,8 @@ export class AuthenticationService {
 	public logout(): void {
 		this.token = '';
 		this.userId = '';
-		window.localStorage.removeItem('jwtToken');
+		localStorage.removeItem('jwtToken');
+		localStorage.removeItem('userId');
 	}
 
 	public getUserId(): string {

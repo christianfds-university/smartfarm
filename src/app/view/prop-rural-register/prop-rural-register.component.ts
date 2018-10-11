@@ -13,34 +13,34 @@ import { environment } from 'src/environments/environment';
 })
 export class PropRuralRegisterComponent implements OnInit {
 
-  registerData = { nome: '', desc: '', dono: '', loc: { x: '', y: ''} };
+  registerData = { nome: '', desc: '', dono: '', loc: { x: '', y: '' } };
   message = '';
 
   constructor(private http: HttpClient, private router: Router, private auth: AuthenticationService) {
     if (!this.auth.hasToken()) {
       this.router.navigate(['home']);
     } else {
-      const aux = JSON.stringify(auth.getUserId());
-      this.registerData.dono = aux;
+      this.registerData.dono = auth.getUserId();
     }
-	}
+  }
 
   ngOnInit() {
   }
 
   register() {
-    console.log(this.registerData);
-
     const httpOptions = {
       'authorization': this.auth.getToken(),
       'data': this.registerData
     };
 
-
     this.http.post('/api/propriedade', httpOptions).subscribe(resp => {
-     if (!environment.production) {
-        console.log(resp);
-     }
+      const x = JSON.parse(JSON.stringify(resp));
+      console.log(x);
+      if (! x.success) {
+        this.message = x.msg;
+      } else {
+        this.router.navigate(['proprural']);
+      }
     }, err => {
       this.message = err.error.msg;
     });
