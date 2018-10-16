@@ -33,12 +33,15 @@ import { GaugeComponent } from './component/gauge/gauge.component';
 import { HomeComponent } from './view/home/home.component';
 import { PropRuralComponent } from './view/prop-rural/prop-rural.component';
 import { CockpitComponent } from './view/cockpit/cockpit.component';
-import { SensorsComponent } from './view/sensors/sensors.component';
+// import { SensorsComponent } from './view/sensors/sensors.component';
 import { PropRuralListComponent } from './view/prop-rural-list/prop-rural-list.component';
 import { EqComponent } from './view/eq/eq.component';
 import { LoginComponent } from './view/user-login/login.component';
 import { RegisterComponent } from './view/user-register/register.component';
 import { PropRuralRegisterComponent } from './view/prop-rural-register/prop-rural-register.component';
+import { TalhaoComponent } from './view/talhao/talhao.component';
+import { TalhaoRegComponent } from './view/talhao-reg/talhao-reg.component';
+import { TalhaoListComponent } from './view/talhao-list/talhao-list.component';
 
 const routes: Routes = [
 { path: 'login', component: LoginComponent },
@@ -48,46 +51,52 @@ const routes: Routes = [
 { path: 'proprural-reg', component: PropRuralRegisterComponent},
 { path: 'proprural/:propid', component: PropRuralComponent },
 { path: 'proprural/:propid/cockpit', component: CockpitComponent },
-{ path: 'proprural/:propid/sensors', component: SensorsComponent },
+// { path: 'proprural/:propid/sensors', component: SensorsComponent },
+{ path: 'talhao/:propid', component: TalhaoListComponent },
+{ path: 'talhao-reg/:propid', component: TalhaoRegComponent},
+{ path: 'talhao/:propid/:talhaoid', component: TalhaoComponent },
 { path: 'eq', component: EqComponent },
 { path: '', redirectTo: '/login', pathMatch: 'full'}
 ];
 
 @NgModule({
   declarations: [
-  AppComponent,
-  HomeComponent,
-  PropRuralComponent,
-  CockpitComponent,
-  ButtongridComponent,
-  GaugeComponent,
-  SensorsComponent,
-  EqComponent,
-  PropRuralListComponent,
-  LoginComponent,
-  RegisterComponent,
-  PropRuralRegisterComponent
+    AppComponent,
+    HomeComponent,
+    PropRuralComponent,
+    CockpitComponent,
+    ButtongridComponent,
+    GaugeComponent,
+    // SensorsComponent,
+    EqComponent,
+    PropRuralListComponent,
+    LoginComponent,
+    RegisterComponent,
+    PropRuralRegisterComponent,
+    TalhaoComponent,
+    TalhaoRegComponent,
+    TalhaoListComponent
   ],
   imports: [
-  BrowserModule,
-  FormsModule,
-  HttpClientModule,
-  BrowserAnimationsModule,
-    MatMenuModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatToolbarModule,
-    MatGridListModule,
-    MatExpansionModule,
-    MatTableModule,
-    MatListModule,
-    MatFormFieldModule,
-    MatInputModule,
-  NgxGaugeModule,
-  NgxLineChartModule,
-  ScrollToModule.forRoot(),
-  RouterModule.forRoot(routes)
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+      MatMenuModule,
+      MatButtonModule,
+      MatIconModule,
+      MatCardModule,
+      MatToolbarModule,
+      MatGridListModule,
+      MatExpansionModule,
+      MatTableModule,
+      MatListModule,
+      MatFormFieldModule,
+      MatInputModule,
+    NgxGaugeModule,
+    NgxLineChartModule,
+    ScrollToModule.forRoot(),
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]

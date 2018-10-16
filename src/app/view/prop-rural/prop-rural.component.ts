@@ -22,22 +22,18 @@ export class PropRuralComponent implements OnInit {
 
 	constructor(private activeRoute: ActivatedRoute) {
 
-
 		this.subscription = this.activeRoute.paramMap.subscribe(params => {
 			if (params.get('propid')) {
 
 				this.PropId = params.get('propid');
 
-				// this.options.push(new ButtonOption('Sensores', 'sensors', 'primary'));
-				this.options.push(new ButtonOption('Talhão', 'sensors', 'primary'));
+				this.options.push(new ButtonOption('Sensores', '/sensors', 'primary'));
+				this.options.push(new ButtonOption('Talhões', '/talhao' + '/' + this.PropId, 'primary'));
 				// this.options.push(new ButtonOption('EarthEngine', '#', 'primary'));
 				this.options.push(new ButtonOption('Drone', '#', 'primary'));
 				this.options.push(new ButtonOption('Sala De Controle (Cockpit)', 'cockpit', 'primary'));
 			}
 		});
-
-
-
 
 	}
 

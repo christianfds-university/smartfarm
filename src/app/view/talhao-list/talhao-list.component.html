@@ -1,0 +1,23 @@
+<div style="text-align: right; margin-bottom: 10px">
+  <a mat-raised-button color="primary" [routerLink]="['/talhao-reg', this.propid]">Adicionar Talhão</a>
+</div>
+
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let x of talhoes; let i = index" [attr.data-index]="i">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{x.nome}}
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="myFlex" *ngIf="x.numero != 0">
+      <div class="flexItem">{{x.id}}</div>
+      <div class="flexItem" style="text-align: right">
+        <a mat-flat-button [routerLink]="['/talhao', this.propid, x.id]">Detalhes</a>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+</mat-accordion>

@@ -2,9 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var TalhaoSchema = new Schema({
-    numero: {
-        type: Number,
-        default: 1,
+    nome: {
+        type: String,
         required: true
     },
     propriedade_id: {

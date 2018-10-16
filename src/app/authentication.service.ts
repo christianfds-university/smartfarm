@@ -19,7 +19,7 @@ export class AuthenticationService {
 	}
 
 	public hasToken(): boolean {
-		return this.getToken() !== undefined && this.getToken() !== null;
+		return this.getToken() !== undefined && this.getToken() !== null && this.getToken() !== '';
 	}
 
 	public saveToken(token: string): void {

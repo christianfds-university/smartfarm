@@ -1,0 +1,7 @@
+.myFlex{
+    display: flex;
+}
+
+.flexItem{
+    flex: 1 1 auto;
+}

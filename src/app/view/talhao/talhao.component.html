@@ -1,0 +1,64 @@
+<mat-grid-list cols="4">
+  <mat-grid-tile>
+    <app-gauge [value]="21" [label]="'Temperatura'" [appendText]="'°C'">
+    </app-gauge>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <app-gauge [value]="21" [label]="'Temperatura do Solo'" [appendText]="'°C'">
+    </app-gauge>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <app-gauge [value]="13" [label]="'Umidade'" [appendText]="'g/Kg'">
+    </app-gauge>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <app-gauge [value]="12" [label]="'Umidade do Solo'" [appendText]="'g/Kg'">
+    </app-gauge>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <b>
+          {{this.Talhao.nome}}
+        </b>
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="myFlex">
+      <div class="flexItem">
+        Latitude: {{this.Talhao.location.coordinates[1]}}
+        Longitude: {{this.Talhao.location.coordinates[0]}}
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<div style="height: 10px"></div>
+
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <b>
+          Safra atual de - TODO
+        </b>
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="myFlex">
+      <div class="flexItem">
+        Info
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+
+
+<app-buttongrid [data]="options"></app-buttongrid>

@@ -8,6 +8,7 @@ var router = express.Router();
 
 var User = require('../models/User');
 var Propriedade = require('../models/Propriedade');
+var Talhao = require('../models/Talhao');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -95,14 +96,33 @@ router.post('/propriedade', function(req, res) {
 */
 //TODO usar token pra puxar lista de propriedades da qual o usuário seja dono
 // router.get('/propridade', passport.authenticate('jwt', { session: false }), function(req, res) {
-router.get('/propriedade', function(req, res) {
+  router.get('/propriedade', function(req, res) {
+    var token = getToken(req.headers);
+    
+    if (token) {
+      
+      Propriedade.find({'dono': req.headers.userid}, function (err, obj) {
+      if (err) return next(err);
+      res.json(obj);
+    });
+    
+  } else {
+    return res.status(403).send({success: false, msg: 'Não autorizado.'});
+  }
+});
+
+
+/*
+* Lista propriedade especifica
+*/
+router.get('/propriedade/:propid', function(req, res) {
   var token = getToken(req.headers);
- 
+  
   if (token) {
 
-    Propriedade.find({'dono': req.headers.userid}, function (err, books) {
+    Propriedade.findById(propid, function (err, obj) {
       if (err) return next(err);
-      res.json(books);
+      res.json(obj);
     });
 
   } else {
@@ -110,6 +130,74 @@ router.get('/propriedade', function(req, res) {
   }
 });
 
+/*
+* Lista talhões
+*/
+router.get('/talhao', function(req, res) {
+  var token = getToken(req.headers);
+  
+  if (token) {
+    
+    Talhao.find({'propriedade_id': req.headers.propid}, function (err, obj) {
+      if (err) return next(err);
+      res.json(obj);
+    });
+    
+  } else {
+    return res.status(403).send({success: false, msg: 'Não autorizado.'});
+  }
+});
+
+/*
+* Lista talhão especifico
+*/
+router.get('/talhao/:talhaoid', function(req, res) {
+  var token = getToken(req.headers);
+  
+  if (token) {
+    
+    Talhao.findById(req.params.talhaoid, function (err, obj) {
+      if (err) return next(err);
+      res.json(obj);
+    });
+    
+  } else {
+    return res.status(403).send({success: false, msg: 'Não autorizado.'});
+  }
+});
+
+/*
+* Cadastra talhão
+*/
+router.post('/talhao', function (req, res) {
+  var token = getToken(req.body);
+  
+  if (token) {
+    let data = req.body.data;
+    
+    var newTalhao = new Talhao({
+      nome: data.nome,
+      propriedade_id: data.propid,
+      //TODO
+      kml_path: '',
+      location: {
+        type: 'Point',
+        coordinates: [data.loc.x, data.loc.y]
+      }
+    });
+
+    newTalhao.save(function (err) {
+      if (err) {
+        console.log(err);
+        return res.json({ success: false, msg: 'Falha na criação.' });
+      }
+      res.json({ success: true, msg: 'Talhão criada.' });
+    });
+  }
+  else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
 
 /*
 * Obtem o token do header

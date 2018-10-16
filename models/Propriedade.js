@@ -27,4 +27,7 @@ var PropriedadeSchema = new Schema({
   }
 });
 
+// TODO
+// Método onde dado um user_id e propriedade_id verifica se este é dono da propriedade
+
 module.exports = mongoose.model('Propriedade', PropriedadeSchema);
