@@ -2,13 +2,17 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var EstacaoSchema = new Schema({
-    numero: {
+    _id_ext:{
         type: Number,
-        default: 1,
+        required: true
+    },
+    nome: {
+        type: String,
         required: true
     },
     talhao_id: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'Talhao',
         required: true
     },
     location: {

@@ -9,10 +9,15 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var config = require('./config/database');
 
+var db_init = require('./dbinit');
+
 //Faz conexão com o banco
 mongoose.Promise = require('bluebird');
 mongoose.connect(config.database, { promiseLibrary: require('bluebird') })
-  .then(() =>  console.log('connection succesful'))
+  .then(function () {
+    console.log('connection succesful');
+    db_init.db_init();
+  })
   .catch((err) => console.error(err));
 
 //Inicializa API's e APP
@@ -22,25 +27,25 @@ var app = express();
 //Configura parsers, express, passport e etc
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({'extended':'false'}));
+app.use(bodyParser.urlencoded({ 'extended': 'false' }));
 
 app.use(passport.initialize());
 
-app.use(express.static(path.join(__dirname, 'dist')));
-app.use('/', express.static(path.join(__dirname, 'dist','App')));
-app.use('/login', express.static(path.join(__dirname, 'dist','App')));
-app.use('/register', express.static(path.join(__dirname, 'dist','App')));
+// app.use(express.static(path.join(__dirname, 'dist')));
+app.use('/', express.static(path.join(__dirname, 'dist', 'App')));
+app.use('/login', express.static(path.join(__dirname, 'dist', 'App')));
+app.use('/register', express.static(path.join(__dirname, 'dist', 'App')));
 app.use('/api', api);
 
 //Trata o erro 404
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -49,5 +54,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;

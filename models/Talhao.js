@@ -7,7 +7,8 @@ var TalhaoSchema = new Schema({
         required: true
     },
     propriedade_id: {
-        type: String,
+        type: Schema.Types.ObjectId, 
+        ref: 'Propriedade',
         required: true
     },
     kml_path: {

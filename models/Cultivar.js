@@ -7,7 +7,8 @@ var CultivarSchema = new Schema({
         required: true
     },
     tipo_cultivar_id: {
-        type: String,
+        type: Schema.Types.ObjectId, 
+        ref: 'TipoCultivar',
         required: true
     },
 });

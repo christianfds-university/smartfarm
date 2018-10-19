@@ -8,15 +8,18 @@ var SafraSchema = new Schema({
         required: true
     },
     talhao_id: {
-        type: String,
+        type: Schema.Types.ObjectId, 
+        ref: 'Talhao', 
         required: true
     },
     cultivar_id: {
-        type: String,
+        type: Schema.Types.ObjectId, 
+        ref: 'Cultivar',
         required: true
     },
     data_ini: {
         type: Date,
+        default: Date.now,
         required: true
     },
     data_fim: {

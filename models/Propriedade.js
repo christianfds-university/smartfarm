@@ -11,7 +11,8 @@ var PropriedadeSchema = new Schema({
     required: true
   },
   dono: {
-    type: String,
+    type: Schema.Types.ObjectId, 
+    ref: 'User',
     required: true
   },
   location: {

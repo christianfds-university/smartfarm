@@ -1,0 +1,70 @@
+[
+    {
+        "sigla": "VE", 
+        "nome": "Emergência"    
+    },
+    {
+        "sigla": "V1", 
+        "nome": "Primeira Folha"    
+    },
+    {
+        "sigla": "V2", 
+        "nome": "Segunda Folha"    
+    },
+    {
+        "sigla": "V3", 
+        "nome": "Terceira Folha"    
+    },
+    {
+        "sigla": "V4", 
+        "nome": "Quarta Folha"    
+    },
+    {
+        "sigla": "V5", 
+        "nome": "Quinta Folha"    
+    },
+    {
+        "sigla": "V6", 
+        "nome": "Sexta Folha"    
+    },
+    {
+        "sigla": "V7", 
+        "nome": "Sétima Folha"    
+    },
+    {
+        "sigla": "V8", 
+        "nome": "Oitava Folha"    
+    },
+    {
+        "sigla": "V9", 
+        "nome": "Nona Folha"    
+    },
+    {
+        "sigla": "V10", 
+        "nome": "Décima Folha"    
+    },
+    {
+        "sigla": "R1", 
+        "nome": "Espigamento"    
+    },
+    {
+        "sigla": "R2", 
+        "nome": "Grão em bolha"    
+    },
+    {
+        "sigla": "R3", 
+        "nome": "Grão leitoso"    
+    },
+    {
+        "sigla": "R4", 
+        "nome": "Grão pastoso"    
+    },
+    {
+        "sigla": "R5", 
+        "nome": "Grão dentado"    
+    },
+    {
+        "sigla": "R6", 
+        "nome": "Maturação Fisiológica"    
+    }
+]
