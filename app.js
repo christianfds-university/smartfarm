@@ -9,7 +9,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var config = require('./config/database');
 
-var db_init = require('./dbinit');
+var db_init = require('./config/dbinit');
 
 //Faz conexão com o banco
 mongoose.Promise = require('bluebird');

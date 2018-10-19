@@ -11,8 +11,7 @@ var EstadoFenologicoCultivarSchema = new Schema({
         required: true
     },
     img_path: {
-        type: String,
-        required: true
+        type: String
     },
     cultivar_id: {
         type: Schema.Types.ObjectId,

@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
-var config = require('./config/database');
+var config = require('./database');
 
-var TipoCultivar = require('./models/TipoCultivar');
-var EstadoFenologico = require('./models/EstadoFenologico');
+var TipoCultivar = require('../models/TipoCultivar');
+var EstadoFenologico = require('../models/EstadoFenologico');
 var fs = require('fs');
 
 function initTipoCultivar(){
@@ -14,6 +14,7 @@ function initTipoCultivar(){
         }
         // Caso vazio, inicializa de acordo com o json
         if (!doc || doc.length === 0) {
+            console.log('Inicializando TipoCultivar');
             fs.readFile('./models/data/tipocultivar.json', function (fsErr, fsData) {
                 if (fsErr) {
                     console.log(fsErr);
@@ -65,6 +66,7 @@ function initTipoCultivar(){
 exports.db_init = function () {
     console.log("Inicializando banco de dados");
 
+    initTipoCultivar();
 
 }
 

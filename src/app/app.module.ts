@@ -15,7 +15,8 @@ import { MatMenuModule,
          MatTableModule,
          MatListModule,
          MatFormFieldModule,
-         MatInputModule } from '@angular/material';
+         MatInputModule,
+         MatSelectModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -42,6 +43,9 @@ import { PropRuralRegisterComponent } from './view/prop-rural-register/prop-rura
 import { TalhaoComponent } from './view/talhao/talhao.component';
 import { TalhaoRegComponent } from './view/talhao-reg/talhao-reg.component';
 import { TalhaoListComponent } from './view/talhao-list/talhao-list.component';
+import { CultivarComponent } from './view/cultivar/cultivar.component';
+import { CultivarRegComponent } from './view/cultivar-reg/cultivar-reg.component';
+import { CultivarListComponent } from './view/cultivar-list/cultivar-list.component';
 
 const routes: Routes = [
 { path: 'login', component: LoginComponent },
@@ -55,6 +59,9 @@ const routes: Routes = [
 { path: 'talhao/:propid', component: TalhaoListComponent },
 { path: 'talhao-reg/:propid', component: TalhaoRegComponent},
 { path: 'talhao/:propid/:talhaoid', component: TalhaoComponent },
+{ path: 'cultivar', component: CultivarListComponent },
+{ path: 'cultivar-reg', component: CultivarRegComponent},
+// { path: 'cultivar/:cultivarid', component: CultivarComponent },
 { path: 'eq', component: EqComponent },
 { path: '', redirectTo: '/login', pathMatch: 'full'}
 ];
@@ -75,7 +82,10 @@ const routes: Routes = [
     PropRuralRegisterComponent,
     TalhaoComponent,
     TalhaoRegComponent,
-    TalhaoListComponent
+    TalhaoListComponent,
+    CultivarComponent,
+    CultivarRegComponent,
+    CultivarListComponent
   ],
   imports: [
     BrowserModule,
@@ -93,6 +103,7 @@ const routes: Routes = [
       MatListModule,
       MatFormFieldModule,
       MatInputModule,
+      MatSelectModule,
     NgxGaugeModule,
     NgxLineChartModule,
     ScrollToModule.forRoot(),

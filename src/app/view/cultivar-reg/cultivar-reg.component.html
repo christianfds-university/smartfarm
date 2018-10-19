@@ -1,0 +1,26 @@
+<div class="myFlex">
+
+  <span class="spacer"></span>
+
+  <mat-card class="form-holder">
+    <form (ngSubmit)="register()" class="myForm align-r" #registerForm="ngForm">
+      <div class="fullW-field" *ngIf="message !== ''">
+        {{message}}
+      </div>
+      <mat-form-field class="fullW-field">
+        <input matInput placeholder="Nome" type="text" [(ngModel)]="registerData.nome" name="nome" required>
+      </mat-form-field>
+      <mat-form-field class="fullW-field">
+        <mat-select placeholder="Tipo de Cultivar" [(ngModel)]="registerData.tipo_cultivar_id" name="item" required>
+          <mat-option *ngFor="let item of tipo_cultivar" [value]="item.id">
+            {{item.nome}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary" [disabled]="!registerForm.form.valid">Registrar Cultivar!</button>
+    </form>
+  </mat-card>
+
+  <span class="spacer"></span>
+
+</div>

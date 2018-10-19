@@ -1,0 +1,35 @@
+<div style="text-align: right; margin-bottom: 20px">
+  <a mat-raised-button color="primary" [routerLink]="['/cultivar-reg']">Adicionar Cultivar</a>
+</div>
+
+<div style="text-align: right; margin-bottom: 10px">
+  <mat-select placeholder="Filtro" [(ngModel)]="filter" name="item" (selectionChange)="applyFilter()" style="width: 300px">
+    <mat-option [value]="">---------</mat-option>
+    <mat-option *ngFor="let item of tipo_cultivar" [value]="item.nome">
+      {{item.nome}}
+    </mat-option>
+  </mat-select>
+</div>
+
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let x of cultivares; let i = index" [attr.data-index]="i">
+    <mat-expansion-panel-header>
+      <mat-panel-title *ngIf="x.tipo === ''">
+        {{x.nome}}
+      </mat-panel-title>
+      <mat-panel-title *ngIf="x.tipo != ''">
+        {{x.tipo}} - {{x.nome}}
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="myFlex" *ngIf="x.numero != 0">
+      <div class="flexItem">{{x.id}}</div>
+      <div class="flexItem" style="text-align: right">
+        <a mat-flat-button [routerLink]="['/talhao']">Detalhes</a>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+</mat-accordion>
