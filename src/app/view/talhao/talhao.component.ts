@@ -21,7 +21,12 @@ export class TalhaoComponent implements OnInit {
 
   public PropId: string;
   public TalhaoId: string;
+
   public Talhao: any;
+  public Safra: any;
+  public SafrasPassadas: any;
+  displayedColumns: string[] = ['data_ini', 'cultivarnome'];
+
   options = [];
 
 
@@ -34,9 +39,8 @@ export class TalhaoComponent implements OnInit {
         this.PropId = params.get('propid');
         this.TalhaoId = params.get('talhaoid');
 
-        this.options.push(new ButtonOption('Sensores', '/sensors', 'primary'));
-        this.options.push(new ButtonOption('Safras Passadas', '', 'primary'));
-
+        this.options.push(new ButtonOption('Estações', '/sensors', 'primary'));
+        // this.options.push(new ButtonOption('Safras Passadas', '', 'primary'));
       }
     });
 
@@ -51,17 +55,21 @@ export class TalhaoComponent implements OnInit {
     };
 
     this.http.get('/api/talhao/' + this.TalhaoId, httpOptions).subscribe(data => {
-      console.log('data');
-      console.log(data);
-
       this.Talhao = data;
-
     }, err => {
       if (err.status === 401) {
         this.router.navigate(['login']);
       }
     });
 
+    this.http.get('/api/safra/lasttalhao/' + this.TalhaoId, httpOptions).subscribe(data => {
+      this.Safra = data;
+    });
+
+    this.http.get('/api/safra/talhao/' + this.TalhaoId, httpOptions).subscribe(data => {
+      console.log(data);
+      this.SafrasPassadas = data;
+    });
   }
 
 }

@@ -2,11 +2,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var SafraSchema = new Schema({
-    numero: {
-        type: Number,
-        default: 1,
-        required: true
-    },
     talhao_id: {
         type: Schema.Types.ObjectId, 
         ref: 'Talhao', 
@@ -31,5 +26,6 @@ var SafraSchema = new Schema({
         required: false
     }
 });
+
 
 module.exports = mongoose.model('Safra', SafraSchema);

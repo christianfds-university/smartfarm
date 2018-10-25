@@ -16,7 +16,10 @@ import { MatMenuModule,
          MatListModule,
          MatFormFieldModule,
          MatInputModule,
-         MatSelectModule } from '@angular/material';
+         MatSelectModule,
+         MatSidenavModule,
+         MatNativeDateModule,
+         MatDatepickerModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -46,6 +49,8 @@ import { TalhaoListComponent } from './view/talhao-list/talhao-list.component';
 import { CultivarComponent } from './view/cultivar/cultivar.component';
 import { CultivarRegComponent } from './view/cultivar-reg/cultivar-reg.component';
 import { CultivarListComponent } from './view/cultivar-list/cultivar-list.component';
+import { SafraRegComponent } from './view/safra-reg/safra-reg.component';
+import { SafraComponent } from './view/safra/safra.component';
 
 const routes: Routes = [
 { path: 'login', component: LoginComponent },
@@ -59,9 +64,11 @@ const routes: Routes = [
 { path: 'talhao/:propid', component: TalhaoListComponent },
 { path: 'talhao-reg/:propid', component: TalhaoRegComponent},
 { path: 'talhao/:propid/:talhaoid', component: TalhaoComponent },
+{ path: 'safra/:safraid', component: SafraComponent },
+{ path: 'safra-reg/:talhaoid', component: SafraRegComponent },
 { path: 'cultivar', component: CultivarListComponent },
 { path: 'cultivar-reg', component: CultivarRegComponent},
-// { path: 'cultivar/:cultivarid', component: CultivarComponent },
+{ path: 'cultivar/:cultivarid', component: CultivarComponent },
 { path: 'eq', component: EqComponent },
 { path: '', redirectTo: '/login', pathMatch: 'full'}
 ];
@@ -85,7 +92,9 @@ const routes: Routes = [
     TalhaoListComponent,
     CultivarComponent,
     CultivarRegComponent,
-    CultivarListComponent
+    CultivarListComponent,
+    SafraRegComponent,
+    SafraComponent
   ],
   imports: [
     BrowserModule,
@@ -104,6 +113,9 @@ const routes: Routes = [
       MatFormFieldModule,
       MatInputModule,
       MatSelectModule,
+      MatSidenavModule,
+      MatNativeDateModule,
+      MatDatepickerModule,
     NgxGaugeModule,
     NgxLineChartModule,
     ScrollToModule.forRoot(),

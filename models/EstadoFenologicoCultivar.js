@@ -2,6 +2,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var EstadoFenologicoCultivarSchema = new Schema({
+    ordem: {
+        type: Number,
+        required: true
+    },
     sigla: {
         type: String,
         required: true

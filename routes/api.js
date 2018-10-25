@@ -7,11 +7,13 @@ var jwt = require('jsonwebtoken');
 var router = express.Router();
 
 var User = require('../models/User');
-var Propriedade = require('../models/Propriedade');
+var Safra = require('../models/Safra');
 var Talhao = require('../models/Talhao');
 var Cultivar = require('../models/Cultivar');
+var Propriedade = require('../models/Propriedade');
 var TipoCultivar = require('../models/TipoCultivar');
 var EstadoFenologico = require('../models/EstadoFenologico');
+var EstadoFenologicoSafra = require('../models/EstadoFenologicoSafra');
 var EstadoFenologicoCultivar = require('../models/EstadoFenologicoCultivar');
 
 /* GET home page. */
@@ -124,7 +126,7 @@ router.get('/propriedade/:propid', function (req, res) {
 
   if (token) {
 
-    Propriedade.findById(propid, function (err, obj) {
+    Propriedade.findById(req.params.propid, function (err, obj) {
       if (err) return next(err);
       res.json(obj);
     });
@@ -204,6 +206,39 @@ router.post('/talhao', function (req, res) {
 });
 
 /*
+* Lista estado fenológido cultivar
+*/
+router.get('/estadofenologicocultivar/:idcultivar', function (req, res) {
+  var token = getToken(req.headers);
+
+  if (token) {
+    EstadoFenologicoCultivar.find({ 'cultivar_id': req.params.idcultivar }).sort({ 'ordem': 1 }).exec(function (err, obj) {
+      if (err) return next(err);
+      res.json(obj);
+    });
+
+  } else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
+
+/*
+* Lista estado fenológido tipo cultivar
+*/
+router.get('/estadofenologico/:idtipocultivar', function (req, res) {
+  var token = getToken(req.headers);
+
+  if (token) {
+    EstadoFenologico.find({ 'tipo_cultivar_id': req.params.idtipocultivar }).sort({ 'ordem': 1 }).exec(function (err, obj) {
+      if (err) return next(err);
+      res.json(obj);
+    });
+  } else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
+
+/*
 * Lista tipo cultivar
 */
 router.get('/tipocultivar', function (req, res) {
@@ -233,6 +268,32 @@ router.get('/cultivar', function (req, res) {
       if (err) return next(err);
       res.json(obj);
     });
+
+  } else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
+
+/*
+* Lista cultivar por tipo
+*/
+router.get('/cultivar/tipo/:tipocult', function (req, res) {
+  var token = getToken(req.headers);
+
+  if (token) {
+    
+    if(req.params.tipocult === ''){
+      Cultivar.find({}).populate('tipo_cultivar_id').exec(function (err, objs) {
+        if (err) return next(err);
+        res.json(objs);
+      });
+    }  
+    else{
+      Cultivar.find({ 'tipo_cultivar_id': req.params.tipocult }).populate('tipo_cultivar_id').exec(function (err, objs) {
+        if (err) return next(err);
+        res.json(objs);
+      });  
+    }  
 
   } else {
     return res.status(403).send({ success: false, msg: 'Não autorizado.' });
@@ -280,6 +341,7 @@ router.post('/cultivar', function (req, res) {
       EstadoFenologico.find({ 'tipo_cultivar_id': data.tipo_cultivar_id }, function (err, obj) {
         obj.forEach(element => {
           var newEstadoFenologicoCultivar = new EstadoFenologicoCultivar({
+            ordem: element.ordem,
             sigla: element.sigla,
             nome: element.nome,
             img_path: '',
@@ -299,6 +361,108 @@ router.post('/cultivar', function (req, res) {
 });
 
 /*
+* Cria uma nova safra
+*/
+router.post('/safra', function (req, res) {
+  var token = getToken(req.body);
+
+  if (token) {
+    let data = req.body.data;
+
+    Safra.find({ 'talhao_id': req.params.talhaoid, 'data_fim': null }).populate('cultivar_id').exec(function (err, objs) {
+      if (!err) {
+        if (err) return next(err);
+        //Caso não haja uma safra atual
+        if (objs.length === 0) {
+          var S = new Safra({
+            'talhao_id': data.talhao_id,
+            'cultivar_id': data.cultivar_id,
+            'data_ini': data.data_ini
+          });
+
+          S.save(function(err, myObj){
+            var F = new EstadoFenologicoSafra({
+              'data': data.data_ini,
+              'estado_fenologico_cultivar_id': data.estado_fen_id,
+              'safra_id': myObj._id
+            });
+
+            F.save();
+
+            res.json({ success: true, msg: 'Safra criada.' });
+          });
+
+        }
+      }
+    });
+  }
+  else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+
+});
+
+/*
+* Obtem as safras do talhao
+*/
+router.get('/safra/talhao/:talhaoid', function (req, res) {
+  var token = getToken(req.headers);
+
+  if (token) {
+
+    Safra.find({ 'talhao_id': req.params.talhaoid }).sort({ 'data_ini': -1 }).populate('cultivar_id').exec(function (err, objs) {
+      if (!err) {
+        if (err) return next(err);
+        res.json(objs);
+      }
+    });
+
+  } else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
+
+/*
+* Obtem a safra atual do talhao
+*/
+router.get('/safra/lasttalhao/:talhaoid', function (req, res) {
+  var token = getToken(req.headers);
+
+  if (token) {
+
+    Safra.find({ 'talhao_id': req.params.talhaoid, 'data_fim': null }).populate('cultivar_id').exec(function (err, objs) {
+      if (!err) {
+        if (err) return next(err);
+        res.json(objs[0]);
+      }
+    });
+
+  } else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
+
+/*
+* Obtem o estado fenológico da safra
+*/
+router.get('/safra/estadofenologicosafra/:safraid', function (req, res) {
+  var token = getToken(req.headers);
+
+  if (token) {
+
+    Safra.find({ 'safra_id': req.params.safraid }).sort({ 'data': -1 }).limit(1).exec(function (err, objs) {
+      if (!err) {
+        if (err) return next(err);
+        res.json(objs);
+      }
+    });
+
+  } else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
+
+/*
 * Obtem o token do header
 */
 getToken = function (headers) {
@@ -313,4 +477,5 @@ getToken = function (headers) {
     return null;
   }
 };
+
 module.exports = router;

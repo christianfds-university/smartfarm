@@ -28,7 +28,7 @@ export class AppComponent {
 		this.loggedin = this.auth.hasToken();
 
 		if (!this.auth.hasToken()) {
-			this.router.navigate(['login']);
+			// this.router.navigate(['login']);
 			this.loggedin = false;
 		}
 	}

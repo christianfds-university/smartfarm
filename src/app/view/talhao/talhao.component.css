@@ -25,3 +25,15 @@ mat-grid-tile a{
 .flexItem{
     flex: 1 1 auto;
 }
+
+#safrasTable{
+	width: 100%;
+}
+
+.mat-table th{
+    text-align: center;
+}
+
+.mat-table{
+    text-align: center;
+}

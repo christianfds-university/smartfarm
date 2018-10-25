@@ -1,3 +1,5 @@
+<h1 *ngIf="Talhao != undefined">{{this.Talhao.nome}}</h1>
+
 <mat-grid-list cols="4">
   <mat-grid-tile>
     <app-gauge [value]="21" [label]="'Temperatura'" [appendText]="'°C'">
@@ -17,12 +19,12 @@
   </mat-grid-tile>
 </mat-grid-list>
 
-<mat-accordion>
+<mat-accordion *ngIf="Talhao != undefined">
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
         <b>
-          {{this.Talhao.nome}}
+          Detalhe do Talhão
         </b>
       </mat-panel-title>
       <mat-panel-description>
@@ -44,17 +46,62 @@
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <b>
-          Safra atual de - TODO
+        <b *ngIf="Safra != undefined">
+          Safra atual de {{Safra.cultivar_id.nome}}
+        </b>
+        <b *ngIf="Safra == undefined">
+          Safra Atual
         </b>
       </mat-panel-title>
       <mat-panel-description>
+        <span *ngIf="Safra == undefined">
+          Sem uma safra atual
+        </span>
       </mat-panel-description>
     </mat-expansion-panel-header>
 
     <div class="myFlex">
-      <div class="flexItem">
-        Info
+      <div class="flexItem" style="text-align: right" *ngIf="Safra == undefined">
+        <a mat-raised-button color="primary" [routerLink]="['/safra-reg', this.TalhaoId]">Cadastrar nova Safra!</a>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<div style="height: 10px"></div>
+
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <b>
+          Safras Passadas
+        </b>
+      </mat-panel-title>
+      <mat-panel-description>
+        <span *ngIf="SafrasPassadas != undefined">
+          {{SafrasPassadas.length}} safras passadas!
+        </span>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="myFlex">
+      <div class="flexItem" *ngIf="SafrasPassadas != undefined && SafrasPassadas.length > 0">
+
+        <mat-table #table id="safrasTable" [dataSource]="SafrasPassadas">
+          <ng-container matColumnDef="data_ini">
+            <th mat-header-cell *matHeaderCellDef> Data de Inicio </th>
+            <td mat-cell *matCellDef="let row"> {{row.data_ini}} </td>
+          </ng-container>
+          <ng-container matColumnDef="cultivarnome">
+            <th mat-header-cell *matHeaderCellDef> Cultivar </th>
+            <td mat-cell *matCellDef="let row"> {{row.cultivar_id.nome}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </mat-table>
+
       </div>
     </div>
   </mat-expansion-panel>

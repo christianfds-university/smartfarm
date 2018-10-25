@@ -1,0 +1,49 @@
+<div class="myFlex">
+
+  <span class="spacer"></span>
+
+  <mat-card class="form-holder">
+    <form (ngSubmit)="register()" class="myForm align-r" #registerForm="ngForm">
+      <div class="fullW-field" *ngIf="message !== ''">
+        {{message}}
+      </div>
+      <mat-form-field class="fullW-field">
+        <input matInput [matDatepicker]="myDatepicker" placeholder="Data de inicio" type="text" [(ngModel)]="registerData.data_ini"
+          name="dataini" required>
+        <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #myDatepicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="halfW-field">
+        <mat-select placeholder="Tipo de Cultivar" [(ngModel)]="tipo_cultivar_selection" name="tipocultivar"
+          (selectionChange)="updateCultivares()" required>
+          <mat-option *ngFor="let item of tipo_cultivar" [value]="item.id">
+            {{item.nome}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="tipo_cultivar_selection != undefined" class="halfW-field">
+        <mat-select placeholder="Cultivar" [(ngModel)]="registerData.cultivar_id" name="cultivar" (selectionChange)="updateEstadoFen()"
+          required>
+          <mat-option *ngFor="let item of cultivares" [value]="item.id">
+            {{item.nome}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="tipo_cultivar_selection != undefined" class="fullW-field">
+        <mat-select placeholder="Estado Fenológico" [(ngModel)]="registerData.estado_fen_id" name="estadofen" required>
+          <mat-option *ngFor="let item of estado_fen" [value]="item.id">
+            {{item.sigla}} - {{item.nome}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" [disabled]="!registerForm.form.valid">Registrar Cultivar!</button>
+    </form>
+  </mat-card>
+
+  <span class="spacer"></span>
+
+</div>

@@ -18,9 +18,9 @@ export class HomeComponent implements OnInit {
   options = [
   	new ButtonOption('Propriedade Rural', '/proprural', 'primary'),
     new ButtonOption('Cultivares', '/cultivar', 'primary'),
-  	new ButtonOption('Equações', '/eq', 'primary'),
-  	new ButtonOption('Usuários', '#', 'accent')
+  	new ButtonOption('Equações', '/eq', 'primary')
   ];
+  // new ButtonOption('Usuários', '#', 'accent')
 
   constructor() { }
 

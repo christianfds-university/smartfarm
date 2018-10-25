@@ -26,6 +26,7 @@ export class TalhaoListComponent implements OnInit {
   private subscription: any;
   talhoes: any;
   propid: string;
+  prop: any;
 
   constructor(private http: HttpClient, private router: Router, private auth: AuthenticationService, private activeRoute: ActivatedRoute) {
 
@@ -70,14 +71,19 @@ export class TalhaoListComponent implements OnInit {
         this.router.navigate(['login']);
       }
 
-      this.talhoes = [
-        new Talhao('', '1231', 1, 1, 1),
-        new Talhao('', '1232', 2, 2, 2),
-        new Talhao('', '1233', 3, 3, 3),
-        new Talhao('', '1234', 4, 4, 4),
-        new Talhao('', '1235', 5, 5, 5)
-      ];
     });
+
+    this.http.get('/api/propriedade/' + this.propid, httpOptions).subscribe(data => {
+      console.log('data');
+      console.log(data);
+
+      this.prop = data;
+    }, err => {
+      if (err.status === 401) {
+        this.router.navigate(['login']);
+      }
+    });
+
   }
 
 }

@@ -26,7 +26,10 @@ export class PropRuralListComponent implements OnInit {
 
 	ngOnInit() {
 		const httpOptions = {
-			headers: new HttpHeaders({ 'Authorization': this.auth.getToken(), 'userid': this.auth.getUserId() }),
+			headers: new HttpHeaders({
+				'Authorization': this.auth.getToken(),
+				'userid': this.auth.getUserId()
+			}),
 		};
 
 		this.http.get('/api/propriedade', httpOptions).subscribe(data => {
@@ -44,14 +47,6 @@ export class PropRuralListComponent implements OnInit {
 			if (err.status === 401) {
 				this.router.navigate(['login']);
 			}
-
-			this.propriedades = [
-				new PropRural('123', '123', 'Propriedade debug 1'),
-				new PropRural('123', '123', 'Propriedade debug 2'),
-				new PropRural('123', '123', 'Propriedade debug 3'),
-				new PropRural('123', '123', 'Propriedade debug 4'),
-				new PropRural('123', '123', 'Propriedade debug 5')
-			];
 		});
 	}
 

@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ 'extended': 'false' }));
 
 app.use(passport.initialize());
 
-// app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/', express.static(path.join(__dirname, 'dist', 'App')));
 app.use('/login', express.static(path.join(__dirname, 'dist', 'App')));
 app.use('/register', express.static(path.join(__dirname, 'dist', 'App')));

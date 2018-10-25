@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { tap, catchError, toArray } from 'rxjs/operators';
+import { AuthenticationService } from '../../authentication.service';
 
 class ButtonOption {
 	constructor(
@@ -16,18 +20,19 @@ class ButtonOption {
 export class PropRuralComponent implements OnInit {
 
 	public PropId: string;
+	public Prop: any;
 	options = [];
 
 	private subscription: any;
 
-	constructor(private activeRoute: ActivatedRoute) {
+	constructor(private activeRoute: ActivatedRoute, private http: HttpClient, private router: Router, private auth: AuthenticationService) {
 
 		this.subscription = this.activeRoute.paramMap.subscribe(params => {
 			if (params.get('propid')) {
 
 				this.PropId = params.get('propid');
 
-				this.options.push(new ButtonOption('Sensores', '/sensors', 'primary'));
+				// this.options.push(new ButtonOption('Sensores', '/sensors', 'primary'));
 				this.options.push(new ButtonOption('Talhões', '/talhao' + '/' + this.PropId, 'primary'));
 				// this.options.push(new ButtonOption('EarthEngine', '#', 'primary'));
 				this.options.push(new ButtonOption('Drone', '#', 'primary'));
@@ -38,6 +43,24 @@ export class PropRuralComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Authorization': this.auth.getToken(),
+				'userid': this.auth.getUserId()
+			}),
+		};
+
+
+		this.http.get('/api/propriedade/' + this.PropId, httpOptions).subscribe(data => {
+			console.log('data');
+			console.log(data);
+
+			this.Prop = data;
+		}, err => {
+			if (err.status === 401) {
+				this.router.navigate(['login']);
+			}
+		});
 	}
 
 }
