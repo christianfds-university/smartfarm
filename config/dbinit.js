@@ -15,6 +15,7 @@ function initTipoCultivar(){
         // Caso vazio, inicializa de acordo com o json
         if (!doc || doc.length === 0) {
             console.log('Inicializando TipoCultivar');
+            console.log(__filename);
             fs.readFile('../models/data/tipocultivar.json', function (fsErr, fsData) {
                 if (fsErr) {
                     console.log(fsErr);
