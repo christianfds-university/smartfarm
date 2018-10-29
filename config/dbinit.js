@@ -16,7 +16,7 @@ function initTipoCultivar(){
         if (!doc || doc.length === 0) {
             console.log('Inicializando TipoCultivar');
             console.log(__filename);
-            fs.readFile('../models/data/tipocultivar.json', function (fsErr, fsData) {
+            fs.readFile('./models/data/tipocultivar.json', function (fsErr, fsData) {
                 if (fsErr) {
                     console.log(fsErr);
                     return;
@@ -36,7 +36,7 @@ function initTipoCultivar(){
                         }
                         
                         // Tenta buscar pelo json de estado fenologico
-                        fs.readFile('../models/data/estadofenologico' + element.nome.toLowerCase() + '.json', function (fs2Err, fs2Data) {
+                        fs.readFile('./models/data/estadofenologico' + element.nome.toLowerCase() + '.json', function (fs2Err, fs2Data) {
                             if (fs2Err) {
                                 console.log(fs2Err);
                                 return;
