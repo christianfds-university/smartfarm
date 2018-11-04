@@ -1,5 +1,10 @@
 [
     {
+        "ordem": 0,
+        "sigla": "P", 
+        "nome": "Plantio"    
+    },
+    {
         "ordem": 1,
         "sigla": "VE", 
         "nome": "Emergência"    

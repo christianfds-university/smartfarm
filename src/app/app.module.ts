@@ -1,25 +1,30 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 // Angular Material
-import { MatMenuModule,
-         MatButtonModule,
-         MatIconModule,
-         MatCardModule,
-         MatToolbarModule,
-         MatGridListModule,
-         MatExpansionModule,
-         MatTableModule,
-         MatListModule,
-         MatFormFieldModule,
-         MatInputModule,
-         MatSelectModule,
-         MatSidenavModule,
-         MatNativeDateModule,
-         MatDatepickerModule } from '@angular/material';
+import {
+  MatMenuModule,
+  MatButtonModule,
+  MatIconModule,
+  MatCardModule,
+  MatToolbarModule,
+  MatGridListModule,
+  MatExpansionModule,
+  MatTableModule,
+  MatListModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatNativeDateModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatSnackBarModule,
+  MAT_DATE_LOCALE
+} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -52,25 +57,30 @@ import { CultivarListComponent } from './view/cultivar-list/cultivar-list.compon
 import { SafraRegComponent } from './view/safra-reg/safra-reg.component';
 import { SafraComponent } from './view/safra/safra.component';
 
+import { AuthenticationService } from './authentication.service';
+
+import { DialogUpdateEstadoFenComponent } from './dialog/dialog-update-estado-fen/dialog-update-estado-fen.component';
+import { DialogColheitaComponent } from './dialog/dialog-colheita/dialog-colheita.component';
+
 const routes: Routes = [
-{ path: 'login', component: LoginComponent },
-{ path: 'register', component: RegisterComponent },
-{ path: 'home', component: HomeComponent },
-{ path: 'proprural', component: PropRuralListComponent },
-{ path: 'proprural-reg', component: PropRuralRegisterComponent},
-{ path: 'proprural/:propid', component: PropRuralComponent },
-{ path: 'proprural/:propid/cockpit', component: CockpitComponent },
-// { path: 'proprural/:propid/sensors', component: SensorsComponent },
-{ path: 'talhao/:propid', component: TalhaoListComponent },
-{ path: 'talhao-reg/:propid', component: TalhaoRegComponent},
-{ path: 'talhao/:propid/:talhaoid', component: TalhaoComponent },
-{ path: 'safra/:safraid', component: SafraComponent },
-{ path: 'safra-reg/:talhaoid', component: SafraRegComponent },
-{ path: 'cultivar', component: CultivarListComponent },
-{ path: 'cultivar-reg', component: CultivarRegComponent},
-{ path: 'cultivar/:cultivarid', component: CultivarComponent },
-{ path: 'eq', component: EqComponent },
-{ path: '', redirectTo: '/login', pathMatch: 'full'}
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'proprural', component: PropRuralListComponent },
+  { path: 'proprural-reg', component: PropRuralRegisterComponent },
+  { path: 'proprural/:propid', component: PropRuralComponent },
+  { path: 'proprural/:propid/cockpit', component: CockpitComponent },
+  // { path: 'proprural/:propid/sensors', component: SensorsComponent },
+  { path: 'talhao/:propid', component: TalhaoListComponent },
+  { path: 'talhao-reg/:propid', component: TalhaoRegComponent },
+  { path: 'talhao/:propid/:talhaoid', component: TalhaoComponent },
+  { path: 'safra/:safraid', component: SafraComponent },
+  { path: 'safra-reg/:talhaoid', component: SafraRegComponent },
+  { path: 'cultivar', component: CultivarListComponent },
+  { path: 'cultivar-reg', component: CultivarRegComponent },
+  { path: 'cultivar/:cultivarid', component: CultivarComponent },
+  { path: 'eq', component: EqComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
 
 @NgModule({
@@ -94,7 +104,9 @@ const routes: Routes = [
     CultivarRegComponent,
     CultivarListComponent,
     SafraRegComponent,
-    SafraComponent
+    SafraComponent,
+    DialogUpdateEstadoFenComponent,
+    DialogColheitaComponent
   ],
   imports: [
     BrowserModule,
@@ -116,12 +128,18 @@ const routes: Routes = [
       MatSidenavModule,
       MatNativeDateModule,
       MatDatepickerModule,
+      MatDialogModule,
+      MatSnackBarModule,
     NgxGaugeModule,
     NgxLineChartModule,
     ScrollToModule.forRoot(),
     RouterModule.forRoot(routes)
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    AuthenticationService,
+    { provide: MAT_DATE_LOCALE, useValue: 'pt' }
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [DialogUpdateEstadoFenComponent]
 })
 export class AppModule { }

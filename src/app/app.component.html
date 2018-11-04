@@ -1,36 +1,55 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <button mat-icon-button (click)="backClicked()">
-      <mat-icon>keyboard_arrow_left</mat-icon>
-    </button>
+<div class="container" [class.is-mobile]="mobileQuery.matches">
 
-    <span class="spacer"></span>
-    <a routerLink="/"><span>SmartFarm</span></a>
-
-    <span class="spacer"></span>
-
-    <button mat-icon-button [matMenuTriggerFor]="appMenu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #appMenu="matMenu">
-      <button mat-menu-item routerlink="settings">
-        <mat-icon>settings</mat-icon>
-        <span>Configurações</span>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button mat-icon-button (click)="snav.toggle()">
+        <mat-icon>menu</mat-icon>
       </button>
-      <button mat-menu-item routerlink="login" *ngIf="!loggedin">
-        <mat-icon>exit_to_app</mat-icon>
-        <span>Login</span>
+
+      <!-- <button mat-icon-button (click)="backClicked()">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button> -->
+
+      <span class="spacer"></span>
+      <a routerLink="/"><span>SmartFarm</span></a>
+
+      <span class="spacer"></span>
+
+      <button mat-icon-button [matMenuTriggerFor]="appMenu">
+        <mat-icon>more_vert</mat-icon>
       </button>
-      <button mat-menu-item (click)="logout()" *ngIf="loggedin">
-        <mat-icon>power_settings_new</mat-icon>
-        <span>Sair</span>
-      </button>
-    </mat-menu>
+      <mat-menu #appMenu="matMenu">
+        <button mat-menu-item routerlink="settings">
+          <mat-icon>settings</mat-icon>
+          <span>Configurações</span>
+        </button>
+        <button mat-menu-item routerlink="login" *ngIf="!loggedin">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Login</span>
+        </button>
+        <button mat-menu-item (click)="logout()" *ngIf="loggedin">
+          <mat-icon>power_settings_new</mat-icon>
+          <span>Sair</span>
+        </button>
+      </mat-menu>
 
-  </mat-toolbar-row>
-</mat-toolbar>
+    </mat-toolbar-row>
+  </mat-toolbar>
 
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #snav [mode]="over" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <mat-nav-list>
+        <a mat-list-item routerLink="/proprural">Propriedade Rural</a>
+        <a mat-list-item routerLink="/cultivar">Cultivar</a>
+        <a mat-list-item routerLink="/eq">Equações</a>
+      </mat-nav-list>
+    </mat-sidenav>
 
-<div id="main">
-  <router-outlet (activate)="changeOfRoutes()"></router-outlet>
+    <mat-sidenav-content>
+      <div id="main">
+        <router-outlet (activate)="changeOfRoutes()"></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
 </div>

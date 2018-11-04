@@ -1,4 +1,4 @@
-<mat-grid-list cols='5'>
+<mat-grid-list id="grid" [cols]='breakpoint' rowHeight="1:1" (window:resize)="onResize($event)">
 	<mat-grid-tile *ngFor='let opt of data'>
 		<a [routerLink]='[opt.link]'>
 			<button mat-raised-button color='{{opt.color}}'>

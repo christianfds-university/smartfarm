@@ -281,19 +281,19 @@ router.get('/cultivar/tipo/:tipocult', function (req, res) {
   var token = getToken(req.headers);
 
   if (token) {
-    
-    if(req.params.tipocult === ''){
+
+    if (req.params.tipocult === '') {
       Cultivar.find({}).populate('tipo_cultivar_id').exec(function (err, objs) {
         if (err) return next(err);
         res.json(objs);
       });
-    }  
-    else{
+    }
+    else {
       Cultivar.find({ 'tipo_cultivar_id': req.params.tipocult }).populate('tipo_cultivar_id').exec(function (err, objs) {
         if (err) return next(err);
         res.json(objs);
-      });  
-    }  
+      });
+    }
 
   } else {
     return res.status(403).send({ success: false, msg: 'Não autorizado.' });
@@ -335,7 +335,7 @@ router.post('/cultivar', function (req, res) {
     newCultivar.save(function (err, myObj) {
       if (err) {
         console.log(err);
-        return res.json({ success: false, msg: 'Falha na criação.' });
+        return res.json({ success: false, msg: 'Falha na criação do cultivar.' });
       }
       // Clonar os estados fenológicos do tipo
       EstadoFenologico.find({ 'tipo_cultivar_id': data.tipo_cultivar_id }, function (err, obj) {
@@ -348,11 +348,15 @@ router.post('/cultivar', function (req, res) {
             cultivar_id: myObj.id
           });
 
-          newEstadoFenologicoCultivar.save();
+          newEstadoFenologicoCultivar.save(function (err) {
+            if (err) {
+              return res.json({ success: false, msg: 'Falha ao clonar Estado Fenológico.', wtf: err });
+            }
+            return res.json({ success: true, msg: 'Cultivar criado.' });
+          });
         });
       })
 
-      res.json({ success: true, msg: 'Cultivar criado.' });
     });
   }
   else {
@@ -380,16 +384,20 @@ router.post('/safra', function (req, res) {
             'data_ini': data.data_ini
           });
 
-          S.save(function(err, myObj){
+          S.save(function (err, myObj) {
             var F = new EstadoFenologicoSafra({
               'data': data.data_ini,
               'estado_fenologico_cultivar_id': data.estado_fen_id,
               'safra_id': myObj._id
             });
 
-            F.save();
+            F.save(function (myErr) {
+              if (myErr) {
+                return res.json({ success: false, msg: 'Falha ao gravar Estado Fenologico', wtf: myErr });
+              }
+              return res.json({ success: true, msg: 'Safra criada.' });
+            });
 
-            res.json({ success: true, msg: 'Safra criada.' });
           });
 
         }
@@ -405,7 +413,7 @@ router.post('/safra', function (req, res) {
 /*
 * Obtem as safras do talhao
 */
-router.get('/safra/talhao/:talhaoid', function (req, res) {
+router.get('/talhao/safra/:talhaoid', function (req, res) {
   var token = getToken(req.headers);
 
   if (token) {
@@ -425,7 +433,7 @@ router.get('/safra/talhao/:talhaoid', function (req, res) {
 /*
 * Obtem a safra atual do talhao
 */
-router.get('/safra/lasttalhao/:talhaoid', function (req, res) {
+router.get('/talhao/lastsafra/:talhaoid', function (req, res) {
   var token = getToken(req.headers);
 
   if (token) {
@@ -443,14 +451,42 @@ router.get('/safra/lasttalhao/:talhaoid', function (req, res) {
 });
 
 /*
-* Obtem o estado fenológico da safra
+* Insere o estado fenológico da safra
 */
-router.get('/safra/estadofenologicosafra/:safraid', function (req, res) {
+router.post('/estadofenologicosafra/:safraid', function (req, res) {
+  var token = getToken(req.body);
+
+  if (token) {
+    let data = req.body.data;
+
+    var EstadoFenSafra = new EstadoFenologicoSafra({
+      'data': data.data,
+      'estado_fenologico_cultivar_id': data.estado_fenologico_cultivar_id,
+      'safra_id': req.params.safraid
+    });
+
+    EstadoFenSafra.save(function (err) {
+      if (err) {
+        return res.json({ success: false, msg: 'Falha no cadastro de Estado Fenologico.', wtf: err });
+      }
+      return res.json({ success: true, msg: 'Estado Fenológico cadastrado!' });
+    });
+  }
+  else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+
+});
+
+/*
+* Obtem todos os estados fenológicos da safra
+*/
+router.get('/estadofenologicosafra/:safraid', function (req, res) {
   var token = getToken(req.headers);
 
   if (token) {
 
-    Safra.find({ 'safra_id': req.params.safraid }).sort({ 'data': -1 }).limit(1).exec(function (err, objs) {
+    EstadoFenologicoSafra.find({ 'safra_id': req.params.safraid }).sort({ 'data': -1 }).populate('estado_fenologico_cultivar_id').exec(function (err, objs) {
       if (!err) {
         if (err) return next(err);
         res.json(objs);

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { AuthenticationService } from '../../authentication.service';
 import { environment } from 'src/environments/environment';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-talhao-reg',
@@ -18,7 +19,8 @@ export class TalhaoRegComponent implements OnInit {
 
   private subscription: any;
 
-  constructor(private http: HttpClient, private router: Router, private auth: AuthenticationService, private activeRoute: ActivatedRoute) {
+  // tslint:disable-next-line:max-line-length
+  constructor(private http: HttpClient, private router: Router, private auth: AuthenticationService, private activeRoute: ActivatedRoute, public snackBar: MatSnackBar) {
     this.subscription = this.activeRoute.paramMap.subscribe(params => {
       if (!this.auth.hasToken() && !params.get('propid')) {
         this.router.navigate(['home']);
@@ -32,6 +34,12 @@ export class TalhaoRegComponent implements OnInit {
 
   }
 
+  showSnack(x) {
+    this.snackBar.open(x, 'x', {
+      duration: 2000,
+    });
+  }
+
   register() {
     // TODO upload de kml
     const httpOptions = {
@@ -42,13 +50,12 @@ export class TalhaoRegComponent implements OnInit {
     this.http.post('/api/talhao', httpOptions).subscribe(resp => {
       const x = JSON.parse(JSON.stringify(resp));
       console.log(x);
-      if (!x.success) {
-        this.message = x.msg;
-      } else {
+      this.showSnack(x.msg);
+      if (x.success) {
         this.router.navigate(['talhao', this.registerData.propid]);
       }
     }, err => {
-      this.message = err.error.msg;
+      this.showSnack(err.error.msg);
     });
 
   }

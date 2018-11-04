@@ -40,18 +40,15 @@ export class CultivarComponent implements OnInit {
     };
 
     this.http.get('/api/cultivar/' + this.cultivarId, httpOptions).subscribe(data => {
-      console.log('data');
-      console.log(data);
-
       this.cultivar = data;
+    }, err => {
+      if (err.status === 401) {
+        this.router.navigate(['login']);
+      }
     });
 
     this.http.get('/api/estadofenologicocultivar/' + this.cultivarId, httpOptions).subscribe(data => {
-      console.log('data');
-      console.log(data);
-
       this.myEstados = data;
-
     }, err => {
       if (err.status === 401) {
         this.router.navigate(['login']);
@@ -59,11 +56,7 @@ export class CultivarComponent implements OnInit {
     });
 
     this.http.get('/api/estadofenologico/' + this.cultivarId, httpOptions).subscribe(data => {
-      console.log('data');
-      console.log(data);
-
       this.myTipoEstados = data;
-
     }, err => {
       if (err.status === 401) {
         this.router.navigate(['login']);

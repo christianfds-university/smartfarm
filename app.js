@@ -35,6 +35,24 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/', express.static(path.join(__dirname, 'dist', 'App')));
 app.use('/login', express.static(path.join(__dirname, 'dist', 'App')));
 app.use('/register', express.static(path.join(__dirname, 'dist', 'App')));
+
+app.use('/login', express.static(path.join(__dirname, 'dist', 'App')));
+app.use('/register', express.static(path.join(__dirname, 'dist', 'App')));
+app.use('/home', express.static(path.join(__dirname, 'dist', 'App')));
+app.use('/proprural', express.static(path.join(__dirname, 'dist', 'App')));
+app.use('/proprural-reg', express.static(path.join(__dirname, 'dist', 'App')));
+app.use('/proprural/:propid', express.static(path.join(__dirname, 'dist', 'App')));
+app.use('/proprural/:propid/cockpit', express.static(path.join(__dirname, 'dist', 'App')));
+app.use('/talhao/:propid', express.static(path.join(__dirname, 'dist', 'App')));
+app.use('/talhao-reg/:propid', express.static(path.join(__dirname, 'dist', 'App')));
+app.use('/talhao/:propid/:talhaoid', express.static(path.join(__dirname, 'dist', 'App')));
+app.use('/safra/:safraid', express.static(path.join(__dirname, 'dist', 'App')));
+app.use('/safra-reg/:talhaoid', express.static(path.join(__dirname, 'dist', 'App')));
+app.use('/cultivar', express.static(path.join(__dirname, 'dist', 'App')));
+app.use('/cultivar-reg', express.static(path.join(__dirname, 'dist', 'App')));
+app.use('/cultivar/:cultivarid', express.static(path.join(__dirname, 'dist', 'App')));
+app.use('/eq', express.static(path.join(__dirname, 'dist', 'App')));
+
 app.use('/api', api);
 
 //Trata o erro 404

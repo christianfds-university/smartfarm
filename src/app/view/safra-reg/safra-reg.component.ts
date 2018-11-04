@@ -148,6 +148,8 @@ export class SafraRegComponent implements OnInit {
         this.tipo_cultivar_selection = this.tipo_cultivar[0].id;
       }
 
+      this.updateCultivares();
+
     }, err => {
       if (err.status === 401) {
         this.router.navigate(['login']);

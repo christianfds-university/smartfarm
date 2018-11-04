@@ -1,0 +1,29 @@
+.myForm {
+    width: 100%;
+}
+
+.myFlex {
+    display: flex;
+}
+
+.form-holder {
+    min-width: 150px;
+    max-width: 400px;
+    width: 100%;
+}
+
+.fullW-field, .fullW-field>input {
+    width: 100%;
+}
+
+.halfW-field, .halfW-field>input {
+    width: 50%;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.align-r {
+    text-align: right;
+}

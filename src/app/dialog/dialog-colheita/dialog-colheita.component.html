@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Colheita</h1>
+<div mat-dialog-content>
+  <form (ngSubmit)="register()" class="myForm align-r" #registerForm="ngForm">
+
+    <mat-form-field class="fullW-field">
+      <input matInput [matDatepicker]="myDatepicker" placeholder="Data" type="text" [(ngModel)]="registerData.date"
+        name="dataini" required>
+      <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #myDatepicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="fullW-field">
+      <input matInput placeholder="Produtividade" type="number" [(ngModel)]="registerData.produtividade" name="produtividade" required>
+    </mat-form-field>
+
+  </form>
+</div>
+<div mat-dialog-actions class="align-r">
+  <button mat-raised-button color="primary" [disabled]="!registerForm.form.valid" (click)="register()">Registrar Colheita!</button>
+</div>
