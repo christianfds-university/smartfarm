@@ -26,7 +26,7 @@ class EstadoFen {
 })
 export class DialogUpdateEstadoFenComponent implements OnInit {
 
-  registerData = { date: new Date(), produtividade: '' };
+  registerData = { date: new Date(), estado_cultivar_id: '' };
 
   estado_fen: any;
 
@@ -49,6 +49,16 @@ export class DialogUpdateEstadoFenComponent implements OnInit {
         'userid': this.auth.getUserId()
       }),
     };
+
+    this.http.get('/api/estadofenologicocultivar/' + this.data.cultivarId, httpOptions).subscribe(resp => {
+
+      this.estado_fen = [];
+      for (const k in resp) {
+        if (resp !== null) {
+          this.estado_fen.push(new EstadoFen(resp[k]._id, resp[k].sigla, resp[k].nome));
+        }
+      }
+    });
 
   }
 

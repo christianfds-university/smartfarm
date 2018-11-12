@@ -8,6 +8,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/
 
 import { DialogUpdateEstadoFenComponent } from '../../dialog/dialog-update-estado-fen/dialog-update-estado-fen.component';
 import { DialogColheitaComponent } from '../../dialog/dialog-colheita/dialog-colheita.component';
+import { post } from 'selenium-webdriver/http';
 
 class ButtonOption {
   constructor(
@@ -30,7 +31,7 @@ export class TalhaoComponent implements OnInit {
 
   public Safra: any;
   public SafrasPassadas: any;
-  public displayedColumnsSafras: string[] = ['data_ini', 'cultivarnome'];
+  public displayedColumnsSafras: string[] = ['data_ini', 'data_fim', 'cultivarnome'];
 
   public EstadoFenSafra: any;
   public EstadoFenSafraPassadas: any;
@@ -73,8 +74,7 @@ export class TalhaoComponent implements OnInit {
 
   openDialogColheita() {
     const dialogRef = this.dialog.open(DialogColheitaComponent, {
-      width: '300px',
-      data: { safraId: this.Safra._id }
+      width: '300px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -84,12 +84,12 @@ export class TalhaoComponent implements OnInit {
       const httpOptions = {
         'authorization': this.auth.getToken(),
         'data': {
-          'data': result.date,
-          'estado_fenologico_cultivar_id': result.estado_cultivar_id,
+          'data_fim': result.data,
+          'produtividade': result.produtividade
         }
       };
 
-      this.http.post('/api/estadofenologicosafra/' + this.Safra._id, httpOptions).subscribe(resp => {
+      this.http.post('/api/safra/colheita/' + this.Safra._id, httpOptions).subscribe(resp => {
         const x = JSON.parse(JSON.stringify(resp));
 
         this.showSnack(x.msg);
@@ -143,15 +143,11 @@ export class TalhaoComponent implements OnInit {
   }
 
   updateSafra() {
-    this.http.get('/api/talhao/lastsafra/' + this.TalhaoId, this.httpOptions).subscribe(data => {
-      this.Safra = data;
+    this.http.get('/api/talhao/safra/' + this.TalhaoId, this.httpOptions).subscribe(data => {
+      this.Safra = data[0];
+      this.SafrasPassadas = data.slice(1);
 
       this.updateEstadoFenologicoSafra();
-
-    });
-
-    this.http.get('/api/talhao/safra/' + this.TalhaoId, this.httpOptions).subscribe(data => {
-      this.SafrasPassadas = data;
     });
   }
 

@@ -2,19 +2,19 @@
 
 <mat-grid-list cols="4">
   <mat-grid-tile>
-    <app-gauge [value]="21" [label]="'Temperatura'" [appendText]="'°C'">
+    <app-gauge [value]="21" [label]="'Temperatura'" [appendText]="'°C'" style="width: 100%; height: 100%;">
     </app-gauge>
   </mat-grid-tile>
   <mat-grid-tile>
-    <app-gauge [value]="21" [label]="'Temperatura do Solo'" [appendText]="'°C'">
+    <app-gauge [value]="21" [label]="'Temperatura do Solo'" [appendText]="'°C'" style="width: 100%; height: 100%;">
     </app-gauge>
   </mat-grid-tile>
   <mat-grid-tile>
-    <app-gauge [value]="13" [label]="'Umidade'" [appendText]="'g/Kg'">
+    <app-gauge [value]="13" [label]="'Umidade'" [appendText]="'g/Kg'" style="width: 100%; height: 100%;">
     </app-gauge>
   </mat-grid-tile>
   <mat-grid-tile>
-    <app-gauge [value]="12" [label]="'Umidade do Solo'" [appendText]="'g/Kg'">
+    <app-gauge [value]="12" [label]="'Umidade do Solo'" [appendText]="'g/Kg'" style="width: 100%; height: 100%;">
     </app-gauge>
   </mat-grid-tile>
 </mat-grid-list>
@@ -126,6 +126,10 @@
           <ng-container matColumnDef="data_ini">
             <th mat-header-cell *matHeaderCellDef> Data de Inicio </th>
             <td mat-cell *matCellDef="let row"> {{row.data_ini | date: 'dd/MM/yyyy'}} </td>
+          </ng-container>
+          <ng-container matColumnDef="data_fim">
+            <th mat-header-cell *matHeaderCellDef> Data de Colheita </th>
+            <td mat-cell *matCellDef="let row"> {{row.data_fim | date: 'dd/MM/yyyy'}} </td>
           </ng-container>
           <ng-container matColumnDef="cultivarnome">
             <th mat-header-cell *matHeaderCellDef> Cultivar </th>

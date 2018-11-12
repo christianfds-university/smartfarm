@@ -34,6 +34,10 @@ import { NgxGaugeModule } from 'ngx-gauge';
 import { NgxLineChartModule } from 'ngx-line-chart';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 
+import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
+import * as more from 'highcharts/highcharts-more.src';
+import * as solidGauge from 'highcharts/modules/solid-gauge.src';
+
 // Meus componentes gerais
 import { ButtongridComponent } from './component/buttongrid/buttongrid.component';
 import { GaugeComponent } from './component/gauge/gauge.component';
@@ -130,6 +134,7 @@ const routes: Routes = [
       MatDatepickerModule,
       MatDialogModule,
       MatSnackBarModule,
+    ChartModule,
     NgxGaugeModule,
     NgxLineChartModule,
     ScrollToModule.forRoot(),
@@ -137,9 +142,13 @@ const routes: Routes = [
   ],
   providers: [
     AuthenticationService,
-    { provide: MAT_DATE_LOCALE, useValue: 'pt' }
+    { provide: MAT_DATE_LOCALE, useValue: 'pt' },
+    { provide: HIGHCHARTS_MODULES, useFactory: () => [more, solidGauge] }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DialogUpdateEstadoFenComponent]
+  entryComponents: [
+    DialogUpdateEstadoFenComponent,
+    DialogColheitaComponent
+  ]
 })
 export class AppModule { }

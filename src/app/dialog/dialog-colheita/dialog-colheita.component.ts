@@ -19,7 +19,7 @@ export interface DialogData {
 })
 export class DialogColheitaComponent implements OnInit {
 
-  registerData = { date: new Date(), estado_cultivar_id: '' };
+  registerData = { data: new Date(), produtividade: '' };
 
   // tslint:disable-next-line:max-line-length
   constructor(public dialogRef: MatDialogRef<DialogColheitaComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData, private http: HttpClient, private router: Router, private auth: AuthenticationService) {
@@ -27,9 +27,6 @@ export class DialogColheitaComponent implements OnInit {
     if (!this.auth.hasToken()) {
       this.router.navigate(['home']);
     }
-
-    console.log('input data');
-    console.log(this.data);
 
   }
 

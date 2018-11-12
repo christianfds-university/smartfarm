@@ -23,6 +23,8 @@ export class PropRuralComponent implements OnInit {
 	public Prop: any;
 	options = [];
 
+	public valueX: Number;
+
 	private subscription: any;
 
 	constructor(private activeRoute: ActivatedRoute, private http: HttpClient, private router: Router, private auth: AuthenticationService) {
@@ -40,6 +42,9 @@ export class PropRuralComponent implements OnInit {
 			}
 		});
 
+		setInterval(() => {
+			this.valueX = Math.round(Math.random() * 10000) / 100;
+		}, 1000);
 	}
 
 	ngOnInit() {

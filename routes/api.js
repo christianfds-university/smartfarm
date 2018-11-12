@@ -373,7 +373,7 @@ router.post('/safra', function (req, res) {
   if (token) {
     let data = req.body.data;
 
-    Safra.find({ 'talhao_id': req.params.talhaoid, 'data_fim': null }).populate('cultivar_id').exec(function (err, objs) {
+    Safra.find({ 'talhao_id': data.talhao_id, 'data_fim': null }).populate('cultivar_id').exec(function (err, objs) {
       if (!err) {
         if (err) return next(err);
         //Caso não haja uma safra atual
@@ -411,6 +411,31 @@ router.post('/safra', function (req, res) {
 });
 
 /*
+* Colheita da safra
+*/
+router.post('/safra/colheita/:safraid', function (req, res) {
+  var token = getToken(req.body);
+
+  if (token) {
+    let data = req.body.data;
+
+    Safra.findByIdAndUpdate(req.params.safraid, data, { upsert: false }, function (err, doc) {
+      
+      console.log(doc);
+      
+      if (err) {
+        return res.json({ success: false, msg: 'Falha ao gravar colheita', wtf: myErr });
+      }
+      return res.json({ success: true, msg: 'Colheita registrada.' });
+    });
+  }
+  else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+
+});
+
+/*
 * Obtem as safras do talhao
 */
 router.get('/talhao/safra/:talhaoid', function (req, res) {
@@ -422,26 +447,6 @@ router.get('/talhao/safra/:talhaoid', function (req, res) {
       if (!err) {
         if (err) return next(err);
         res.json(objs);
-      }
-    });
-
-  } else {
-    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
-  }
-});
-
-/*
-* Obtem a safra atual do talhao
-*/
-router.get('/talhao/lastsafra/:talhaoid', function (req, res) {
-  var token = getToken(req.headers);
-
-  if (token) {
-
-    Safra.find({ 'talhao_id': req.params.talhaoid, 'data_fim': null }).populate('cultivar_id').exec(function (err, objs) {
-      if (!err) {
-        if (err) return next(err);
-        res.json(objs[0]);
       }
     });
 

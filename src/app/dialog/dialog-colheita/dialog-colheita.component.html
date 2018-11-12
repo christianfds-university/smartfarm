@@ -3,7 +3,7 @@
   <form (ngSubmit)="register()" class="myForm align-r" #registerForm="ngForm">
 
     <mat-form-field class="fullW-field">
-      <input matInput [matDatepicker]="myDatepicker" placeholder="Data" type="text" [(ngModel)]="registerData.date"
+      <input matInput [matDatepicker]="myDatepicker" placeholder="Data" type="text" [(ngModel)]="registerData.data"
         name="dataini" required>
       <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
       <mat-datepicker #myDatepicker></mat-datepicker>
