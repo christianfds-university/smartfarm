@@ -1,0 +1,13 @@
+<div *ngIf="talhao_id != undefined && talhao_id != null">
+
+  <mat-grid-list id="grid" [cols]='breakpoint' rowHeight="1:1" (window:resize)="onResize($event)">
+    <mat-grid-tile *ngFor='let opt of data'>
+      <a [routerLink]='[opt.link]||"/"'>
+        <button mat-raised-button color='{{opt.color}}||"#ccc"'>
+          Estação - {{ opt.data }}
+        </button>
+      </a>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+</div>

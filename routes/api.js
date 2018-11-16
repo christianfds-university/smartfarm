@@ -1,20 +1,25 @@
 var mongoose = require('mongoose');
 var passport = require('passport');
 var config = require('../config/database');
+var api = require('../config/sensors');
 require('../config/passport')(passport);
 var express = require('express');
 var jwt = require('jsonwebtoken');
 var router = express.Router();
 
+var https =  require('https');
+
 var User = require('../models/User');
 var Safra = require('../models/Safra');
 var Talhao = require('../models/Talhao');
+var Estacao = require('../models/Estacao');
 var Cultivar = require('../models/Cultivar');
 var Propriedade = require('../models/Propriedade');
 var TipoCultivar = require('../models/TipoCultivar');
 var EstadoFenologico = require('../models/EstadoFenologico');
 var EstadoFenologicoSafra = require('../models/EstadoFenologicoSafra');
 var EstadoFenologicoCultivar = require('../models/EstadoFenologicoCultivar');
+
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -502,6 +507,28 @@ router.get('/estadofenologicosafra/:safraid', function (req, res) {
     return res.status(403).send({ success: false, msg: 'Não autorizado.' });
   }
 });
+
+/*
+* Obtem as estacoes do talhao
+*/
+router.get('/estacao/:talhaoid', function (req, res) {
+  var token = getToken(req.headers);
+
+  if (token) {
+
+    Estacao.find({ 'talhao_id': req.params.talhaoid }).exec(function (err, objs) {
+      if (!err) {
+        if (err) return next(err);
+        res.json(objs);
+      }
+    });
+
+  } else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
+
+
 
 /*
 * Obtem o token do header

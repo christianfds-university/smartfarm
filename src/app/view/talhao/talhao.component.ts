@@ -8,7 +8,6 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/
 
 import { DialogUpdateEstadoFenComponent } from '../../dialog/dialog-update-estado-fen/dialog-update-estado-fen.component';
 import { DialogColheitaComponent } from '../../dialog/dialog-colheita/dialog-colheita.component';
-import { post } from 'selenium-webdriver/http';
 
 class ButtonOption {
   constructor(

@@ -60,6 +60,7 @@ import { CultivarRegComponent } from './view/cultivar-reg/cultivar-reg.component
 import { CultivarListComponent } from './view/cultivar-list/cultivar-list.component';
 import { SafraRegComponent } from './view/safra-reg/safra-reg.component';
 import { SafraComponent } from './view/safra/safra.component';
+import { EstacoesListComponent } from './view/estacoes-list/estacoes-list.component';
 
 import { AuthenticationService } from './authentication.service';
 
@@ -110,7 +111,8 @@ const routes: Routes = [
     SafraRegComponent,
     SafraComponent,
     DialogUpdateEstadoFenComponent,
-    DialogColheitaComponent
+    DialogColheitaComponent,
+    EstacoesListComponent
   ],
   imports: [
     BrowserModule,
