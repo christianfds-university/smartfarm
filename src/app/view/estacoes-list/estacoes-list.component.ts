@@ -57,9 +57,7 @@ export class EstacoesListComponent implements OnInit {
           }
         }
 
-        this.data.push(new EstacaoCtrl('data', null, 'updater', null, null));
-        this.data.push(new EstacaoCtrl('data', null, 'updater', null, null));
-        this.data.push(new EstacaoCtrl('data', null, 'updater', null, null));
+        this.data.push(new EstacaoCtrl('data', null, 'updater', '#ccc', '.'));
       });
     }
 
