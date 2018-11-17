@@ -1,10 +1,21 @@
 <div *ngIf="talhao_id != undefined && talhao_id != null">
 
+  <div class="full-w" style="margin-bottom: 10px">
+    <div class="half-w">
+      <button mat-raised-button color="primary" (click)="openDialogEstacao(false)">Vincular estação existente</button>
+    </div>
+    <div class="half-w align-r">
+      <button mat-raised-button color="primary" (click)="openDialogEstacao()">Vincular nova estação</button>
+    </div>
+  </div>
+
+
   <mat-grid-list id="grid" [cols]='breakpoint' rowHeight="1:1" (window:resize)="onResize($event)">
-    <mat-grid-tile *ngFor='let opt of data'>
+    <mat-grid-tile *ngFor='let opt of listEstacao'>
       <a [routerLink]='[opt.link]'>
-        <button mat-raised-button  [ngStyle]="{'background-color': opt.color}">
-          Estação - {{ opt.data }}
+        <button mat-raised-button [ngStyle]="{'background-color': opt.is_on ? estacaoOnBG : estacaoOffBG,
+                                              'color': opt.is_on ? estacaoOnFG : estacaoOffFG }">
+          {{opt.api_data != null ? opt.api_data.nome : 'Indisponível'}}
         </button>
       </a>
     </mat-grid-tile>

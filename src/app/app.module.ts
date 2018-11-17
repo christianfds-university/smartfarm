@@ -66,6 +66,7 @@ import { AuthenticationService } from './authentication.service';
 
 import { DialogUpdateEstadoFenComponent } from './dialog/dialog-update-estado-fen/dialog-update-estado-fen.component';
 import { DialogColheitaComponent } from './dialog/dialog-colheita/dialog-colheita.component';
+import { DialogEstacaoComponent } from './dialog/dialog-estacao/dialog-estacao.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -112,7 +113,8 @@ const routes: Routes = [
     SafraComponent,
     DialogUpdateEstadoFenComponent,
     DialogColheitaComponent,
-    EstacoesListComponent
+    EstacoesListComponent,
+    DialogEstacaoComponent
   ],
   imports: [
     BrowserModule,
@@ -150,7 +152,8 @@ const routes: Routes = [
   bootstrap: [AppComponent],
   entryComponents: [
     DialogUpdateEstadoFenComponent,
-    DialogColheitaComponent
+    DialogColheitaComponent,
+    DialogEstacaoComponent
   ]
 })
 export class AppModule { }

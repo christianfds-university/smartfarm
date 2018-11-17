@@ -1,4 +1,4 @@
-button {
+mat-grid-tile button {
     width: 100%;
     height: 100%;
     /* max-width: 160px; */
@@ -14,4 +14,13 @@ mat-grid-tile a {
     max-width: 160px;
     max-height: 160px;
     text-align: center;
+}
+
+.align-r {
+    text-align: right;
+}
+
+.half-w {
+    width: 50%;
+    display: inline-block;
 }

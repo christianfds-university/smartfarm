@@ -46,6 +46,10 @@ export class TalhaoComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router, private auth: AuthenticationService,
     private activeRoute: ActivatedRoute, public dialog: MatDialog, public snackBar: MatSnackBar) {
 
+    if (!this.auth.hasToken()) {
+      this.router.navigate(['home']);
+    }
+
     this.httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.auth.getToken(),

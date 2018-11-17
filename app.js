@@ -8,6 +8,7 @@ var morgan = require('morgan');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var config = require('./config/database');
+var cors = require('cors');
 
 var db_init = require('./config/dbinit');
 
@@ -23,6 +24,8 @@ mongoose.connect(config.database, { promiseLibrary: require('bluebird') })
 //Inicializa API's e APP
 var api = require('./routes/api');
 var app = express();
+
+app.use(cors());
 
 //Configura parsers, express, passport e etc
 app.use(logger('dev'));

@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>Estação {{regNew}}</h1>
+<div mat-dialog-content>
+  <form (ngSubmit)="register()" class="myForm align-r" #registerForm="ngForm">
+
+    <div *ngIf="regNew">
+
+      <mat-form-field class="fullW-field">
+        <input matInput placeholder="Nome" type="text" [(ngModel)]="registerData.nome" name="nome" required>
+      </mat-form-field>
+      
+      <mat-form-field class="fullW-field">
+        <input matInput placeholder="Descrição" type="text" [(ngModel)]="registerData.desc" name="descricao" required>
+      </mat-form-field>
+      
+      <mat-form-field class="fullW-field">
+        <input matInput placeholder="Latitude" type="number" [(ngModel)]="registerData.lat" name="latitude" required>
+      </mat-form-field>
+      
+      <mat-form-field class="fullW-field">
+        <input matInput placeholder="Longitude" type="number" [(ngModel)]="registerData.lon" name="longitude" required>
+      </mat-form-field>
+      
+    </div>
+
+    <!-- Vinculo de estação já existente -->
+    <div *ngIf="!regNew">
+
+      <mat-form-field class="fullW-field">
+        <input matInput placeholder="Id externo" type="number" [(ngModel)]="registerData._id_ext" name="idexterno" required>
+      </mat-form-field>
+      
+    </div>
+
+  </form>
+</div>
+<div mat-dialog-actions class="align-r">
+  <button mat-raised-button color="primary" [disabled]="!registerForm.form.valid" (click)="register()">{{regNew ? 'Registrar': 'Vincular'}} Estação!</button>
+</div>

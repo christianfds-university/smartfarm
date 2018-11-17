@@ -7,7 +7,7 @@ var express = require('express');
 var jwt = require('jsonwebtoken');
 var router = express.Router();
 
-var https =  require('https');
+var request = require('request');
 
 var User = require('../models/User');
 var Safra = require('../models/Safra');
@@ -425,9 +425,9 @@ router.post('/safra/colheita/:safraid', function (req, res) {
     let data = req.body.data;
 
     Safra.findByIdAndUpdate(req.params.safraid, data, { upsert: false }, function (err, doc) {
-      
+
       console.log(doc);
-      
+
       if (err) {
         return res.json({ success: false, msg: 'Falha ao gravar colheita', wtf: myErr });
       }
@@ -509,6 +509,77 @@ router.get('/estadofenologicosafra/:safraid', function (req, res) {
 });
 
 /*
+* Cadastra estacao
+*/
+router.post('/estacao', function (req, res) {
+
+  /*
+  return res.json({ success: false, msg: 'dao cu.' });
+  */
+  var token = getToken(req.body);
+
+  if (token) {
+    let data = req.body.data;
+
+    if (data._id_ext != null) {
+
+      // Verifica a existência do id externo
+      request.get( api.APIpath + '/estacoes/' + data._id_ext, { json: true }, (api_err, api_res, api_body) => {
+        if (api_err) {
+          return res.json({ success: false, msg: 'Falha ao se comunicar com servidor de sensores.' })
+        }
+        const params = api_body;
+        if (params.erro == null && params.resultado != null) {
+          
+          // Verifica se a estação já não está vinculada
+          Estacao.find({ '_id_ext': data._id_ext }, function (ferr, fmyObj) {
+            if (!ferr) {
+              if (fmyObj.length == 0) {
+
+                console.log(data);
+
+                // Cria o vinculo
+                var newEstacao = new Estacao({
+                  _id_ext: data._id_ext,
+                  talhao_id: data.talhao_id
+                });
+                
+                newEstacao.save(function (err, myObj) {
+                  if (err) {
+                    console.log(err);
+                    return res.json({ success: false, msg: 'Falha na criação da Estação.' });
+                  }
+                  return res.json({ success: true, msg: 'Estação vinculada .' });
+                });
+                
+              }
+              else {
+                return res.json({ success: false, msg: 'Estação já vinculada.' });
+              }
+            }
+            else {
+              return res.json({ success: false, msg: 'Falha na criação da Estação.' });
+            }
+          });
+        }
+        else {
+          return res.json({ success: false, msg: 'Estação inexistente.' });
+        }
+      });
+
+    }
+    // Do contrário da post em uma nova e vincula
+    else {
+      return res.json({ success: false, msg: 'TODO.' });
+    }
+
+  }
+  else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
+
+/*
 * Obtem as estacoes do talhao
 */
 router.get('/estacao/:talhaoid', function (req, res) {
@@ -528,7 +599,19 @@ router.get('/estacao/:talhaoid', function (req, res) {
   }
 });
 
+router.get('/out/estacao/:id', function (req, res) {
+  var token = getToken(req.headers);
 
+  if (token) {
+
+    request.get(api.APIpath + '/estacoes/' + req.params.id, { json: true }, (api_err, api_res, api_body) => {
+      res.json(api_body);
+    });
+ 
+  } else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
 
 /*
 * Obtem o token do header
