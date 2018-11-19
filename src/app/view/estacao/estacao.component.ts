@@ -7,6 +7,7 @@ import { AuthenticationService } from '../../authentication.service';
 
 import { DialogEstacaoComponent } from '../../dialog/dialog-estacao/dialog-estacao.component';
 import { ObjectUnsubscribedError } from 'rxjs';
+import { DialogUpdateEstadoFenComponent } from '../../dialog/dialog-update-estado-fen/dialog-update-estado-fen.component';
 
 @Component({
   selector: 'app-estacao',
@@ -17,8 +18,8 @@ export class EstacaoComponent implements OnInit, OnDestroy {
 
   private EstacaoID: any;
 
-  private Safra: any;
-  private Estacao: any;
+  public Safra: any;
+  public Estacao: any;
   private EstadoFen: any;
   private EstadoFenPassados: any;
 
@@ -30,7 +31,7 @@ export class EstacaoComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line:max-line-length
   private tipos = [{ 'id': 1, 'nome': 'Temperatura do Ar', 'unidade': '°C' }, { 'id': 2, 'nome': 'Umidade do Ar', 'unidade': 'g/Kg' }, { 'id': 3, 'nome': 'Temperatura do solo 5cm', 'unidade': '°C' }, { 'id': 4, 'nome': 'Temperatura do solo 20cm', 'unidade': '°C' }, { 'id': 5, 'nome': 'Temperatura do solo 30cm', 'unidade': '°C' }, { 'id': 6, 'nome': 'Umidade do Solo', 'unidade': 'g/Kg' }, { 'id': 7, 'nome': 'Pressao', 'unidade': 'mATM' }, { 'id': 8, 'nome': 'Chuva', 'unidade': 'g/Kg' }, { 'id': 9, 'nome': 'Velocidade do Vento', 'unidade': 'm/s' }, { 'id': 10, 'nome': 'Direcao do Vento', 'unidade': '' }, { 'id': 11, 'nome': 'Luminosidade', 'unidade': 'lx' }, { 'id': 12, 'nome': 'RSSI', 'unidade': '' }, { 'id': 13, 'nome': 'Tensao Bateria', 'unidade': 'V' }];
   private updateChartsInterval: any;
-  private chartsData = new Array(this.tipos.length);
+  public chartsData = new Array(this.tipos.length);
 
   private max = 50;
 
@@ -69,6 +70,48 @@ export class EstacaoComponent implements OnInit, OnDestroy {
     });
   }
 
+  openDialogFenologia() {
+    if (this.Safra) {
+
+      const dialogRef = this.dialog.open(DialogUpdateEstadoFenComponent, {
+        width: '300px',
+        data: { cultivarId: this.Safra.cultivar_id._id }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        console.log(result);
+
+        const httpOptions = {
+          'authorization': this.auth.getToken(),
+          'data': {
+            'data': result.date,
+            'estado_fenologico_cultivar_id': result.estado_cultivar_id,
+          }
+        };
+
+        this.http.post('/api/estadofenologicoestacao/' + this.EstacaoID + '/safra/' + this.Safra._id, httpOptions).subscribe(resp => {
+          const x = JSON.parse(JSON.stringify(resp));
+
+          this.showSnack(x.msg);
+          if (x.success) {
+            this.updateEstadoFenologicoEstacao();
+          }
+        }, err => {
+          this.showSnack(err.error.msg);
+        });
+
+      });
+    }
+  }
+
+  updateEstadoFenologicoEstacao() {
+    this.http.get('/api/estadofenologicoestacao/' + this.EstacaoID + '/safra/' + this.Safra._id, this.httpOptions).subscribe(fendata => {
+      this.EstadoFen = fendata[0];
+      this.EstadoFenPassados = fendata;
+    });
+  }
+
   updateEstacao() {
     this.http.get('/api/estacao/' + this.EstacaoID, this.httpOptions).subscribe(res => {
       const x = JSON.parse(JSON.stringify(res));
@@ -92,7 +135,8 @@ export class EstacaoComponent implements OnInit, OnDestroy {
         if (safra) {
           this.Safra = safra[0];
 
-          this.http.get('/api/estadofenestacao/' + this.EstacaoID + '/safra/' + this.Safra._id, this.httpOptions).subscribe(estfen => {
+          // tslint:disable-next-line:max-line-length
+          this.http.get('/api/estadofenologicoestacao/' + this.EstacaoID + '/safra/' + this.Safra._id, this.httpOptions).subscribe(estfen => {
             if (estfen) {
               this.EstadoFen = estfen[0];
               this.EstadoFenPassados = estfen.slice(1);
@@ -126,10 +170,9 @@ export class EstacaoComponent implements OnInit, OnDestroy {
                   const n = retorno.id_tipo_sensor;
 
                   if (this.chartsData[n - 1] === undefined) {
-                    this.chartsData[n - 1] = [];
-                    this.chartsData[n - 1].push([new Date(leitura.data_hora).getTime(), leitura.leitura]);
+                    this.chartsData[n - 1] = [[new Date(leitura.data_hora).getTime(), leitura.leitura]];
 
-                    this.chartsData[n - 1] = this.chartsData[n - 1].slice();
+                    // this.chartsData[n - 1] = this.chartsData[n - 1].slice();
                   } else if (new Date(leitura.data_hora).getTime() !== this.chartsData[n - 1][this.chartsData[n - 1].length - 1][0]) {
                     this.chartsData[n - 1].push([new Date(leitura.data_hora).getTime(), leitura.leitura]);
 

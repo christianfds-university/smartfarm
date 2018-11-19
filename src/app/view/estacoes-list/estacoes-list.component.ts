@@ -87,6 +87,7 @@ export class EstacoesListComponent implements OnInit, OnDestroy {
     if (this.talhao_id !== undefined && this.talhao_id != null) {
       this.http.get('/api/estacao/talhao/' + this.talhao_id, this.httpOptions).subscribe(estacoes => {
 
+        this.listEstacao = [];
         for (const est in estacoes) {
           if (est) {
 

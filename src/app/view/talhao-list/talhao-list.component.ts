@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -22,20 +22,20 @@ class Talhao {
 })
 export class TalhaoListComponent implements OnInit {
 
+  @Input() propid: string;
 
   private subscription: any;
   talhoes: any;
-  propid: string;
   prop: any;
 
   constructor(private http: HttpClient, private router: Router, private auth: AuthenticationService, private activeRoute: ActivatedRoute) {
-
+    /*
     this.subscription = this.activeRoute.paramMap.subscribe(params => {
       if (params.get('propid')) {
         this.propid = params.get('propid');
       }
     });
-
+    */
   }
 
   ngOnInit() {

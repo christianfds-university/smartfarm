@@ -18,6 +18,7 @@ var Cultivar = require('../models/Cultivar');
 var Propriedade = require('../models/Propriedade');
 var TipoCultivar = require('../models/TipoCultivar');
 var EstadoFenologico = require('../models/EstadoFenologico');
+var ProdutividadeCultivar = require('../models/ProdutividadeCultivar');
 var EstadoFenologicoSafra = require('../models/EstadoFenologicoSafra');
 var EstadoFenologicoEstacao = require('../models/EstadoFenologicoEstacao');
 var EstadoFenologicoCultivar = require('../models/EstadoFenologicoCultivar');
@@ -346,6 +347,7 @@ router.post('/cultivar', function (req, res) {
       }
       // Clonar os estados fenológicos do tipo
       EstadoFenologico.find({ 'tipo_cultivar_id': data.tipo_cultivar_id }, function (err, obj) {
+        let n = 0;
         obj.forEach(element => {
           var newEstadoFenologicoCultivar = new EstadoFenologicoCultivar({
             ordem: element.ordem,
@@ -356,11 +358,13 @@ router.post('/cultivar', function (req, res) {
           });
 
           newEstadoFenologicoCultivar.save(function (err) {
-            if (err) {
-              return res.json({ success: false, msg: 'Falha ao clonar Estado Fenológico.', wtf: err });
+            n++;
+
+            if(n === obj.length){
+              return res.json({ success: true, msg: 'Cultivar criado.' });
             }
-            return res.json({ success: true, msg: 'Cultivar criado.' });
           });
+          
         });
       })
 
@@ -620,7 +624,7 @@ router.get('/estacao/talhao/:talhaoid', function (req, res) {
 /*
 * Cadastra estado fenológico da estação
 */
-router.post('/estadofenestacao/:estacaoid', function (req, res) {
+router.post('/estadofenologicoestacao/:estacaoid/safra/:safraid', function (req, res) {
 
   var token = getToken(req.body);
 
@@ -630,7 +634,7 @@ router.post('/estadofenestacao/:estacaoid', function (req, res) {
     var newEstadoFenologicoEstacao = new EstadoFenologicoEstacao({
       'data': data.data,
       'estado_fenologico_cultivar_id': data.estado_fenologico_cultivar_id,
-      'safra_id': data.safra_id,
+      'safra_id': req.params.safraid,
       'estacao_id': req.params.estacaoid
     })
 
@@ -651,12 +655,12 @@ router.post('/estadofenestacao/:estacaoid', function (req, res) {
 /*
 * Obtem os estados fenológicos da estação de acordo com a safra
 */
-router.get('/estadofenestacao/:estacaoid/safra/:safraid', function (req, res) {
+router.get('/estadofenologicoestacao/:estacaoid/safra/:safraid', function (req, res) {
   var token = getToken(req.headers);
 
   if (token) {
 
-    EstadoFenologicoEstacao.find({ 'estacao_id': req.params.estacaoid, 'safra_id': req.params.safraid }).sort({ 'data': -1 }).exec(function (err, objs) {
+    EstadoFenologicoEstacao.find({ 'estacao_id': req.params.estacaoid, 'safra_id': req.params.safraid }).populate('estado_fenologico_cultivar_id').sort({ 'data': -1 }).exec(function (err, objs) {
       if (!err) {
         if (err) return next(err);
         res.json(objs);
@@ -710,13 +714,64 @@ router.get('/talhao/:talhaoid/sensores/avg', function (req, res) {
 /*
 * Busca a média dos sensores das estações de uma propriedade
 */
-router.get('/propiedade/:propid/sensores/avg', function (req, res) {
+router.get('/propriedade/:propid/sensores/avg', function (req, res) {
   var token = getToken(req.headers);
 
   if (token) {
     Talhao.find({'propriedade_id':req.params.propid}).exec(function (errT, objsT) {
 
     });
+  } else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
+
+/*
+* Cadastra estado fenológico da estação
+*/
+router.post('/produtividadecultivar/:cultivarid', function (req, res) {
+
+  var token = getToken(req.body);
+
+  if (token) {
+    let data = req.body.data;
+
+    var newProdutividade = new ProdutividadeCultivar({
+      'data': data.data,
+      'estado_fenologico_cultivar_id': data.estado_fenologico_cultivar_id,
+      'produtividade': data.produtividade,
+      'cultivar_id': req.params.cultivarid
+    })
+
+    newProdutividade.save(function (err, myObj) {
+      if (err) {
+        console.log(err);
+        return res.json({ success: false, msg: 'Falha no cadastro da produtividade.' });
+      }
+      return res.json({ success: true, msg: 'Estado fenológico cadastrado.' });
+    });
+
+  }
+  else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
+
+/*
+* Obtem os estados fenológicos da estação de acordo com a safra
+*/
+router.get('/produtividadecultivar/:cultivarid', function (req, res) {
+  var token = getToken(req.headers);
+
+  if (token) {
+
+    ProdutividadeCultivar.find({ 'cultivar_id': req.params.cultivarid}).sort({ 'data': -1 }).exec(function (err, objs) {
+      if (!err) {
+        if (err) return next(err);
+        res.json(objs);
+      }
+    });
+
   } else {
     return res.status(403).send({ success: false, msg: 'Não autorizado.' });
   }
@@ -778,6 +833,8 @@ router.get('/out/estacoes/:estacaoid/tipo_sensores/:tiposensorid/ultima_leitura'
     return res.status(403).send({ success: false, msg: 'Não autorizado.' });
   }
 });
+
+
 
 /*
 * Obtem o token do header

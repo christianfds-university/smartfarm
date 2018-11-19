@@ -22,7 +22,7 @@ export class DialogEstacaoComponent implements OnInit {
 
   registerData = { _id_ext: null, nome: null, desc: null, lat: null, lon: null, talhao_id: null };
 
-  private regNew: boolean;
+  public regNew: boolean;
 
   // tslint:disable-next-line:max-line-length
   constructor(public dialogRef: MatDialogRef<DialogEstacaoComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData, private http: HttpClient, private router: Router, private auth: AuthenticationService) {

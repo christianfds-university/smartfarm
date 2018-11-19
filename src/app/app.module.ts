@@ -47,7 +47,6 @@ import { LineComponent } from './component/line/line.component';
 import { HomeComponent } from './view/home/home.component';
 import { PropRuralComponent } from './view/prop-rural/prop-rural.component';
 import { CockpitComponent } from './view/cockpit/cockpit.component';
-// import { SensorsComponent } from './view/sensors/sensors.component';
 import { PropRuralListComponent } from './view/prop-rural-list/prop-rural-list.component';
 import { EqComponent } from './view/eq/eq.component';
 import { LoginComponent } from './view/user-login/login.component';
@@ -69,6 +68,7 @@ import { AuthenticationService } from './authentication.service';
 import { DialogUpdateEstadoFenComponent } from './dialog/dialog-update-estado-fen/dialog-update-estado-fen.component';
 import { DialogColheitaComponent } from './dialog/dialog-colheita/dialog-colheita.component';
 import { DialogEstacaoComponent } from './dialog/dialog-estacao/dialog-estacao.component';
+import { DialogProdutividadeComponent } from './dialog/dialog-produtividade/dialog-produtividade.component';
 
 
 const routes: Routes = [
@@ -117,7 +117,8 @@ const routes: Routes = [
     EstacoesListComponent,
     DialogEstacaoComponent,
     EstacaoComponent,
-    LineComponent
+    LineComponent,
+    DialogProdutividadeComponent
   ],
   imports: [
     BrowserModule,
@@ -156,7 +157,8 @@ const routes: Routes = [
   entryComponents: [
     DialogUpdateEstadoFenComponent,
     DialogColheitaComponent,
-    DialogEstacaoComponent
+    DialogEstacaoComponent,
+    DialogProdutividadeComponent
   ]
 })
 export class AppModule { }

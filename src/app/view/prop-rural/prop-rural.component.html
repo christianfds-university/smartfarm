@@ -1,10 +1,23 @@
-<h1 *ngIf="Prop != undefine">
-	{{Prop.nome}}
-</h1>
+<div *ngIf="Prop != undefined">
+	<h1>
+		{{Prop.nome}}
+	</h1>
+	<div>
+		{{Prop.descricao}}
+	</div>
+	<div style="height:5px"></div>
+	<div>
+		<b>Latitude: </b>{{Prop.location.coordinates[1]}}<br>
+		<b>Longitude: </b>{{Prop.location.coordinates[0]}}
+	</div>
+</div>
 
-<mat-grid-list cols="4">
-	<mat-grid-tile>
-		<app-gauge 
+
+<!-- 
+
+	<mat-grid-list cols="4">
+		<mat-grid-tile>
+			<app-gauge 
 			[value]="valueX" 
 			[label]="'Temperatura'"
 			[appendText]="'°C'"
@@ -15,8 +28,8 @@
 	</mat-grid-tile>
 	<mat-grid-tile>
 		<app-gauge 
-			[value]="valueX" 
-			[label]="'Temperatura do Solo'"
+		[value]="valueX" 
+		[label]="'Temperatura do Solo'"
 			[appendText]="'°C'"
 			[min]="-30"
 			[max]="100"
@@ -35,9 +48,9 @@
 	</mat-grid-tile>
 	<mat-grid-tile>
 		<app-gauge 
-			[value]="12" 
-			[label]="'Umidade do Solo'"
-			[appendText]="'g/Kg'"
+		[value]="12" 
+		[label]="'Umidade do Solo'"
+		[appendText]="'g/Kg'"
 			[min]="0"
 			[max]="100"
 			style="width: 100%; height: 100%;">
@@ -45,12 +58,15 @@
 	</mat-grid-tile>
 </mat-grid-list> 
  
+-->
 <!-- 
 	<div style="width: 25%; height: 250px">
 	<app-gauge [value]="valueX" [label]="'Temperatura'" [appendText]="'°C'" style="width: 100%; height: 100%;">
 	</app-gauge>
 </div> 
 -->
+<div style="height:30px"></div>
 
+<app-talhao-list [propid]="PropId"></app-talhao-list>
 
-<app-buttongrid [data]="options"></app-buttongrid>
+<!-- <app-buttongrid [data]="options"></app-buttongrid> -->

@@ -23,7 +23,7 @@ export class ButtongridComponent implements OnInit {
     }
   }
 
-  onResize() {
+  onResize(event: any) {
     if (document.getElementById('grid').offsetWidth / this.tileSize > this.tileCount) {
       this.breakpoint = this.tileCount;
     } else {

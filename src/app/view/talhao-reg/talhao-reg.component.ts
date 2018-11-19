@@ -52,7 +52,7 @@ export class TalhaoRegComponent implements OnInit {
       console.log(x);
       this.showSnack(x.msg);
       if (x.success) {
-        this.router.navigate(['talhao', this.registerData.propid]);
+        this.router.navigate(['proprural', this.registerData.propid]);
       }
     }, err => {
       this.showSnack(err.error.msg);

@@ -2,11 +2,11 @@
 
 <mat-grid-list cols="4">
   <mat-grid-tile>
-    <app-gauge [value]="21" [label]="'Temperatura'" [appendText]="'°C'" style="width: 100%; height: 100%;">
+    <app-gauge [value]="21" [label]="'Temperatura'" [appendText]="'°C'" [min]="-30" [max]="100" style="width: 100%; height: 100%;">
     </app-gauge>
   </mat-grid-tile>
   <mat-grid-tile>
-    <app-gauge [value]="21" [label]="'Temperatura do Solo'" [appendText]="'°C'" style="width: 100%; height: 100%;">
+    <app-gauge [value]="21" [label]="'Temperatura do Solo'" [appendText]="'°C'" [min]="-30" [max]="100" style="width: 100%; height: 100%;">
     </app-gauge>
   </mat-grid-tile>
   <mat-grid-tile>
@@ -43,7 +43,7 @@
 <div style="height: 10px"></div>
 
 <mat-accordion>
-<mat-expansion-panel>
+  <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
         <b *ngIf="Safra != undefined">
@@ -63,23 +63,23 @@
         </span>
       </mat-panel-description>
     </mat-expansion-panel-header>
-    
+
     <div>
       <div *ngIf="Safra == undefined" class="full-w" style="text-align: right">
-          <a mat-raised-button color="primary" [routerLink]="['/safra-reg', this.TalhaoId]">Cadastrar nova Safra!</a>
+        <a mat-raised-button color="primary" [routerLink]="['/safra-reg', this.TalhaoId]">Cadastrar nova Safra!</a>
       </div>
       <div *ngIf="Safra != undefined" class="full-w" style="margin-bottom: 10px">
-          <div class="half-w">
+        <div class="half-w">
           <button mat-raised-button color="primary" (click)="openDialogColheita()">Colheita</button>
         </div>
         <div class="half-w align-r">
           <button mat-raised-button color="primary" (click)="openDialogFenologia()">Cadastrar Mudança</button>
         </div>
       </div>
-      
+
       <div *ngIf="Safra != undefined" class="myFlex">
         <div class="flexItem" *ngIf="EstadoFenSafraPassadas != undefined && EstadoFenSafraPassadas.length > 0">
-          
+
           <table mat-table #table class="mat-elevation-z4 full-w" [dataSource]="EstadoFenSafraPassadas">
             <ng-container matColumnDef="data">
               <th mat-header-cell *matHeaderCellDef> Data </th>
@@ -89,12 +89,12 @@
               <th mat-header-cell *matHeaderCellDef> Estado Fenológico </th>
               <td mat-cell *matCellDef="let row"> {{row.estado_fenologico_cultivar_id.sigla}}
                 ({{row.estado_fenologico_cultivar_id.nome}}) </td>
-              </ng-container>
+            </ng-container>
 
-              <tr mat-header-row *matHeaderRowDef="displayedColumnsEstadoFen"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsEstadoFen"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumnsEstadoFen;"></tr>
           </table>
-          
+
         </div>
 
       </div>
@@ -118,7 +118,7 @@
         </span>
       </mat-panel-description>
     </mat-expansion-panel-header>
-    
+
     <div class="myFlex">
       <div class="flexItem" *ngIf="SafrasPassadas != undefined && SafrasPassadas.length > 0">
 
@@ -135,7 +135,7 @@
             <th mat-header-cell *matHeaderCellDef> Cultivar </th>
             <td mat-cell *matCellDef="let row"> {{row.cultivar_id.nome}} </td>
           </ng-container>
-          
+
           <tr mat-header-row *matHeaderRowDef="displayedColumnsSafras"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumnsSafras;"></tr>
         </table>
@@ -162,5 +162,7 @@
     <app-estacoes-list [talhao_id]="TalhaoId"></app-estacoes-list>
   </mat-expansion-panel>
 </mat-accordion>
+
+<div style="height: 10px"></div>
 
 <app-buttongrid [data]="options"></app-buttongrid>

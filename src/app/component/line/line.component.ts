@@ -42,7 +42,7 @@ export class LineComponent implements OnInit, OnChanges {
       },
       series: [{
         name: this.label,
-        data: []
+        data: this.value || []
       }],
       tooltip: {
         valueSuffix: ' ' + this.appendText,

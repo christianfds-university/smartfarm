@@ -1,7 +1,29 @@
-.mat-table th{
+.mat-table th {
     text-align: center;
 }
 
-.mat-table{
+.mat-table {
     text-align: center;
+}
+
+.half-w {
+    width: 50%;
+}
+
+.d-inline-b {
+    display: inline-block;
+}
+
+.align-r {
+    text-align: right;
+}
+
+.half-left{
+    width: 80%;
+    margin-right: 20%;
+}
+
+.half-right{
+    margin-left: 20%;
+    width: 80%;
 }

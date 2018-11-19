@@ -37,8 +37,8 @@ export class PropRuralComponent implements OnInit {
 				// this.options.push(new ButtonOption('Sensores', '/sensors', 'primary'));
 				this.options.push(new ButtonOption('Talhões', '/talhao' + '/' + this.PropId, 'primary'));
 				// this.options.push(new ButtonOption('EarthEngine', '#', 'primary'));
-				this.options.push(new ButtonOption('Drone', '#', 'primary'));
-				this.options.push(new ButtonOption('Sala De Controle (Cockpit)', 'cockpit', 'primary'));
+				// this.options.push(new ButtonOption('Drone', '#', 'primary'));
+				// this.options.push(new ButtonOption('Sala De Controle (Cockpit)', 'cockpit', 'primary'));
 			}
 		});
 

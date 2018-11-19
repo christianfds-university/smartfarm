@@ -6,6 +6,10 @@ var ProdutividadeCultivarSchema = new Schema({
         type: Number,
         required: true
     },
+    data: {
+        type: Date,
+        required: true
+    },
     cultivar_id: {
         type: Schema.Types.ObjectId,
         ref: 'Cultivar',
