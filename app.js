@@ -51,6 +51,7 @@ app.use('/talhao-reg/:propid', express.static(path.join(__dirname, 'dist', 'App'
 app.use('/talhao/:propid/:talhaoid', express.static(path.join(__dirname, 'dist', 'App')));
 app.use('/safra/:safraid', express.static(path.join(__dirname, 'dist', 'App')));
 app.use('/safra-reg/:talhaoid', express.static(path.join(__dirname, 'dist', 'App')));
+app.use('/estacao/:estacaoid', express.static(path.join(__dirname, 'dist', 'App')));
 app.use('/cultivar', express.static(path.join(__dirname, 'dist', 'App')));
 app.use('/cultivar-reg', express.static(path.join(__dirname, 'dist', 'App')));
 app.use('/cultivar/:cultivarid', express.static(path.join(__dirname, 'dist', 'App')));

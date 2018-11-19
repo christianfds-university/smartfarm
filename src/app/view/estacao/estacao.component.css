@@ -1,0 +1,48 @@
+mat-grid-tile button {
+    width: 100%;
+    height: 100%;
+    max-width: 160px;
+    max-height: 160px;
+    text-align: center;
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+mat-grid-tile a {
+    width: 80%;
+    height: 80%;
+    text-align: center;
+}
+
+.myFlex {
+    display: flex;
+}
+
+.flexItem {
+    flex: 1 1 auto;
+}
+
+.full-w {
+    width: 100%;
+}
+
+.half-w {
+    width: 50%;
+    display: inline-block;
+}
+
+.mat-table th {
+    text-align: center;
+}
+
+.mat-table {
+    text-align: center;
+}
+
+.align-r {
+    text-align: right;
+}
+
+.inline-block{
+    display: inline-block;
+}

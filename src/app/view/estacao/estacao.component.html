@@ -1,0 +1,144 @@
+<div *ngIf="Estacao != undefined">
+  <h1 *ngIf="Estacao.nome">{{Estacao.nome}}</h1>
+  <h4 *ngIf="Estacao.descricao">{{Estacao.descricao}}</h4>
+
+  <div>
+    <span> Latitude: {{Estacao.latitude || 'Não informado'}} </span><br>
+    <span> Longitude: {{Estacao.longitude || 'Não informado'}} </span>
+  </div>
+</div>
+
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <b>
+          Sensores
+        </b>
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div *ngIf="chartsData === undefined">
+      Carregando
+    </div>
+    <div *ngIf="chartsData !== undefined">
+      <div class="half-w" *ngIf="chartsData[0] !== undefined">
+        <app-line [value]="chartsData[0]" [label]="tipos[0].nome" [appendText]="tipos[0].unidade" [max_value]="max"
+          class="full-w"></app-line>
+      </div>
+      <div class="half-w" *ngIf="chartsData[1] !== undefined">
+        <app-line [value]="chartsData[1]" [label]="tipos[1].nome" [appendText]="tipos[1].unidade" [max_value]="max"
+          class="full-w"></app-line>
+      </div>
+      <div class="half-w" *ngIf="chartsData[2] !== undefined">
+        <app-line [value]="chartsData[2]" [label]="tipos[2].nome" [appendText]="tipos[2].unidade" [max_value]="max"
+          class="full-w"></app-line>
+      </div>
+      <div class="half-w" *ngIf="chartsData[3] !== undefined">
+        <app-line [value]="chartsData[3]" [label]="tipos[3].nome" [appendText]="tipos[3].unidade" [max_value]="max"
+          class="full-w"></app-line>
+      </div>
+      <div class="half-w" *ngIf="chartsData[4] !== undefined">
+        <app-line [value]="chartsData[4]" [label]="tipos[4].nome" [appendText]="tipos[4].unidade" [max_value]="max"
+          class="full-w"></app-line>
+      </div>
+      <div class="half-w" *ngIf="chartsData[5] !== undefined">
+        <app-line [value]="chartsData[5]" [label]="tipos[5].nome" [appendText]="tipos[5].unidade" [max_value]="max"
+          class="full-w"></app-line>
+      </div>
+      <div class="half-w" *ngIf="chartsData[6] !== undefined">
+        <app-line [value]="chartsData[6]" [label]="tipos[6].nome" [appendText]="tipos[6].unidade" [max_value]="max"
+          class="full-w"></app-line>
+      </div>
+      <div class="half-w" *ngIf="chartsData[7] !== undefined">
+        <app-line [value]="chartsData[7]" [label]="tipos[7].nome" [appendText]="tipos[7].unidade" [max_value]="max"
+          class="full-w"></app-line>
+      </div>
+      <div class="half-w" *ngIf="chartsData[8] !== undefined">
+        <app-line [value]="chartsData[8]" [label]="tipos[8].nome" [appendText]="tipos[8].unidade" [max_value]="max"
+          class="full-w"></app-line>
+      </div>
+      <div class="half-w" *ngIf="chartsData[9] !== undefined">
+        <app-line [value]="chartsData[9]" [label]="tipos[9].nome" [appendText]="tipos[9].unidade" [max_value]="max"
+          class="full-w"></app-line>
+      </div>
+      <div class="half-w" *ngIf="chartsData[10] !== undefined">
+        <app-line [value]="chartsData[10]" [label]="tipos[10].nome" [appendText]="tipos[10].unidade" [max_value]="max"
+          class="full-w"></app-line>
+      </div>
+      <div class="half-w" *ngIf="chartsData[11] !== undefined">
+        <app-line [value]="chartsData[11]" [label]="tipos[11].nome" [appendText]="tipos[11].unidade" [max_value]="max"
+          class="full-w"></app-line>
+      </div>
+      <div class="half-w" *ngIf="chartsData[12] !== undefined">
+        <app-line [value]="chartsData[12]" [label]="tipos[12].nome" [appendText]="tipos[12].unidade" [max_value]="max"
+          class="full-w"></app-line>
+      </div>
+      <!-- 
+  <div *ngFor="let item of chartsData; let i = index" class="inline-block half-w">
+    <div class="full-w" *ngIf="item !== undefined">
+      <app-line [value]="chartsData[i]" [label]="tipos[i].nome" [appendText]="tipos[i].unidade" [max_value]="max" class="full-w"></app-line>
+    </div>
+  </div>
+  -->
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+
+
+<div style="height: 10px"></div>
+
+<mat-accordion *ngIf="Safra != undefined">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <b>
+          Estado fenológico
+        </b>
+      </mat-panel-title>
+      <mat-panel-description>
+        <span *ngIf="EstadoFen == undefined">
+          Sem estado fenológico atual
+        </span>
+        <span *ngIf="EstadoFen != undefined">
+          {{EstadoFen.data | date: 'dd/MM/yyyy'}} - {{EstadoFen.estado_fenologico_cultivar_id.sigla}}
+          ({{EstadoFen.estado_fenologico_cultivar_id.nome}})
+        </span>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div>
+      <div class="full-w" style="margin-bottom: 10px">
+        <div class="full-w align-r">
+          <button mat-raised-button color="primary" (click)="openDialogFenologia()">Cadastrar Mudança</button>
+        </div>
+      </div>
+
+      <div class="myFlex">
+        <div class="flexItem" *ngIf="EstadoFenPassados != undefined && EstadoFenPassados.length > 0">
+
+          <table mat-table #table class="mat-elevation-z4 full-w" [dataSource]="EstadoFenPassados">
+            <ng-container matColumnDef="data">
+              <th mat-header-cell *matHeaderCellDef> Data </th>
+              <td mat-cell *matCellDef="let row"> {{row.data | date: 'dd/MM/yyyy'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="estadofen">
+              <th mat-header-cell *matHeaderCellDef> Estado Fenológico </th>
+              <td mat-cell *matCellDef="let row"> {{row.estado_fenologico_cultivar_id.sigla}}
+                ({{row.estado_fenologico_cultivar_id.nome}}) </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsEstadoFen"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsEstadoFen;"></tr>
+          </table>
+
+        </div>
+
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<div style="height: 10px"></div>

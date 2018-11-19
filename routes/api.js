@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var config = require('../config/database');
 var api = require('../config/sensors');
+var _ = require('lodash');
 require('../config/passport')(passport);
 var express = require('express');
 var jwt = require('jsonwebtoken');
@@ -18,6 +19,7 @@ var Propriedade = require('../models/Propriedade');
 var TipoCultivar = require('../models/TipoCultivar');
 var EstadoFenologico = require('../models/EstadoFenologico');
 var EstadoFenologicoSafra = require('../models/EstadoFenologicoSafra');
+var EstadoFenologicoEstacao = require('../models/EstadoFenologicoEstacao');
 var EstadoFenologicoCultivar = require('../models/EstadoFenologicoCultivar');
 
 
@@ -513,9 +515,6 @@ router.get('/estadofenologicosafra/:safraid', function (req, res) {
 */
 router.post('/estacao', function (req, res) {
 
-  /*
-  return res.json({ success: false, msg: 'dao cu.' });
-  */
   var token = getToken(req.body);
 
   if (token) {
@@ -524,13 +523,13 @@ router.post('/estacao', function (req, res) {
     if (data._id_ext != null) {
 
       // Verifica a existência do id externo
-      request.get( api.APIpath + '/estacoes/' + data._id_ext, { json: true }, (api_err, api_res, api_body) => {
+      request.get(api.APIpath + '/estacoes/' + data._id_ext, { json: true }, (api_err, api_res, api_body) => {
         if (api_err) {
           return res.json({ success: false, msg: 'Falha ao se comunicar com servidor de sensores.' })
         }
         const params = api_body;
         if (params.erro == null && params.resultado != null) {
-          
+
           // Verifica se a estação já não está vinculada
           Estacao.find({ '_id_ext': data._id_ext }, function (ferr, fmyObj) {
             if (!ferr) {
@@ -543,7 +542,7 @@ router.post('/estacao', function (req, res) {
                   _id_ext: data._id_ext,
                   talhao_id: data.talhao_id
                 });
-                
+
                 newEstacao.save(function (err, myObj) {
                   if (err) {
                     console.log(err);
@@ -551,7 +550,7 @@ router.post('/estacao', function (req, res) {
                   }
                   return res.json({ success: true, msg: 'Estação vinculada .' });
                 });
-                
+
               }
               else {
                 return res.json({ success: false, msg: 'Estação já vinculada.' });
@@ -568,9 +567,8 @@ router.post('/estacao', function (req, res) {
       });
 
     }
-    // Do contrário da post em uma nova e vincula
     else {
-      return res.json({ success: false, msg: 'TODO.' });
+      return res.json({ success: false, msg: 'Estação inexistente.' });
     }
 
   }
@@ -580,9 +578,29 @@ router.post('/estacao', function (req, res) {
 });
 
 /*
+* Obtem uma estacão
+*/
+router.get('/estacao/:estacaoid', function (req, res) {
+  var token = getToken(req.headers);
+
+  if (token) {
+
+    Estacao.findById(req.params.estacaoid, function (err, objs) {
+      if (!err) {
+        if (err) return next(err);
+        res.json(objs);
+      }
+    });
+
+  } else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
+
+/*
 * Obtem as estacoes do talhao
 */
-router.get('/estacao/:talhaoid', function (req, res) {
+router.get('/estacao/talhao/:talhaoid', function (req, res) {
   var token = getToken(req.headers);
 
   if (token) {
@@ -599,7 +617,61 @@ router.get('/estacao/:talhaoid', function (req, res) {
   }
 });
 
-router.get('/out/estacao/:id', function (req, res) {
+/*
+* Cadastra estado fenológico da estação
+*/
+router.post('/estadofenestacao/:estacaoid', function (req, res) {
+
+  var token = getToken(req.body);
+
+  if (token) {
+    let data = req.body.data;
+
+    var newEstadoFenologicoEstacao = new EstadoFenologicoEstacao({
+      'data': data.data,
+      'estado_fenologico_cultivar_id': data.estado_fenologico_cultivar_id,
+      'safra_id': data.safra_id,
+      'estacao_id': req.params.estacaoid
+    })
+
+    newEstadoFenologicoEstacao.save(function (err, myObj) {
+      if (err) {
+        console.log(err);
+        return res.json({ success: false, msg: 'Falha no cadastro de estado fenológico.' });
+      }
+      return res.json({ success: true, msg: 'Estado fenológico cadastrado.' });
+    });
+
+  }
+  else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
+
+/*
+* Obtem os estados fenológicos da estação de acordo com a safra
+*/
+router.get('/estadofenestacao/:estacaoid/safra/:safraid', function (req, res) {
+  var token = getToken(req.headers);
+
+  if (token) {
+
+    EstadoFenologicoEstacao.find({ 'estacao_id': req.params.estacaoid, 'safra_id': req.params.safraid }).sort({ 'data': -1 }).exec(function (err, objs) {
+      if (!err) {
+        if (err) return next(err);
+        res.json(objs);
+      }
+    });
+
+  } else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
+
+/*
+* Ponte para requisição externa da estação
+*/
+router.get('/out/estacoes/:id', function (req, res) {
   var token = getToken(req.headers);
 
   if (token) {
@@ -607,7 +679,41 @@ router.get('/out/estacao/:id', function (req, res) {
     request.get(api.APIpath + '/estacoes/' + req.params.id, { json: true }, (api_err, api_res, api_body) => {
       res.json(api_body);
     });
- 
+
+  } else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
+
+/*
+* Ponte para requisição externa dos sensores da estação
+*/
+router.get('/out/estacoes/:id/sensores', function (req, res) {
+  var token = getToken(req.headers);
+
+  if (token) {
+
+    request.get(api.APIpath + '/estacoes/' + req.params.id + '/sensores', { json: true }, (api_err, api_res, api_body) => {
+      res.json(api_body);
+    });
+
+  } else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
+
+/*
+* Ponte para requisição externa do ultimo dado do tipo
+*/
+router.get('/out/estacoes/:estacaoid/tipo_sensores/:tiposensorid/ultima_leitura', function (req, res) {
+  var token = getToken(req.headers);
+
+  if (token) {
+
+    request.get(api.APIpath + '/estacoes/' + req.params.estacaoid + '/tipo_sensores/' + req.params.tiposensorid + '/ultima_leitura', { json: true }, (api_err, api_res, api_body) => {
+      res.json(api_body);
+    });
+
   } else {
     return res.status(403).send({ success: false, msg: 'Não autorizado.' });
   }

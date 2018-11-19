@@ -41,6 +41,7 @@ import * as solidGauge from 'highcharts/modules/solid-gauge.src';
 // Meus componentes gerais
 import { ButtongridComponent } from './component/buttongrid/buttongrid.component';
 import { GaugeComponent } from './component/gauge/gauge.component';
+import { LineComponent } from './component/line/line.component';
 
 // Componentes de paginas
 import { HomeComponent } from './view/home/home.component';
@@ -61,12 +62,14 @@ import { CultivarListComponent } from './view/cultivar-list/cultivar-list.compon
 import { SafraRegComponent } from './view/safra-reg/safra-reg.component';
 import { SafraComponent } from './view/safra/safra.component';
 import { EstacoesListComponent } from './view/estacoes-list/estacoes-list.component';
+import { EstacaoComponent } from './view/estacao/estacao.component';
 
 import { AuthenticationService } from './authentication.service';
 
 import { DialogUpdateEstadoFenComponent } from './dialog/dialog-update-estado-fen/dialog-update-estado-fen.component';
 import { DialogColheitaComponent } from './dialog/dialog-colheita/dialog-colheita.component';
 import { DialogEstacaoComponent } from './dialog/dialog-estacao/dialog-estacao.component';
+
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -76,12 +79,12 @@ const routes: Routes = [
   { path: 'proprural-reg', component: PropRuralRegisterComponent },
   { path: 'proprural/:propid', component: PropRuralComponent },
   { path: 'proprural/:propid/cockpit', component: CockpitComponent },
-  // { path: 'proprural/:propid/sensors', component: SensorsComponent },
   { path: 'talhao/:propid', component: TalhaoListComponent },
   { path: 'talhao-reg/:propid', component: TalhaoRegComponent },
   { path: 'talhao/:propid/:talhaoid', component: TalhaoComponent },
   { path: 'safra/:safraid', component: SafraComponent },
   { path: 'safra-reg/:talhaoid', component: SafraRegComponent },
+  { path: 'estacao/:estacaoid', component: EstacaoComponent },
   { path: 'cultivar', component: CultivarListComponent },
   { path: 'cultivar-reg', component: CultivarRegComponent },
   { path: 'cultivar/:cultivarid', component: CultivarComponent },
@@ -97,7 +100,6 @@ const routes: Routes = [
     CockpitComponent,
     ButtongridComponent,
     GaugeComponent,
-    // SensorsComponent,
     EqComponent,
     PropRuralListComponent,
     LoginComponent,
@@ -114,7 +116,9 @@ const routes: Routes = [
     DialogUpdateEstadoFenComponent,
     DialogColheitaComponent,
     EstacoesListComponent,
-    DialogEstacaoComponent
+    DialogEstacaoComponent,
+    EstacaoComponent,
+    LineComponent
   ],
   imports: [
     BrowserModule,

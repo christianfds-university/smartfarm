@@ -63,7 +63,7 @@ export class TalhaoComponent implements OnInit {
         this.PropId = params.get('propid');
         this.TalhaoId = params.get('talhaoid');
 
-        this.options.push(new ButtonOption('Estações', '/sensors', 'primary'));
+        // this.options.push(new ButtonOption('Estações', '/sensors', 'primary'));
       }
     });
 

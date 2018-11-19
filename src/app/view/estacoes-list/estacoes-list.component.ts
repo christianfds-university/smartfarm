@@ -1,10 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { AuthenticationService } from '../../authentication.service';
-import { APIpath } from '../../../../config/sensors';
 
 import { DialogEstacaoComponent } from '../../dialog/dialog-estacao/dialog-estacao.component';
 import { ObjectUnsubscribedError } from 'rxjs';
@@ -22,7 +21,7 @@ class EstacaoCtrl {
   templateUrl: './estacoes-list.component.html',
   styleUrls: ['./estacoes-list.component.css']
 })
-export class EstacoesListComponent implements OnInit {
+export class EstacoesListComponent implements OnInit, OnDestroy {
 
   @Input() talhao_id: string;
 
@@ -34,6 +33,8 @@ export class EstacoesListComponent implements OnInit {
   private estacaoOnFG = '#fff';
   private estacaoOffBG = '#d7dbdd';
   private estacaoOffFG = '#000';
+
+  private EstacaoUpdateInterval: any;
 
   private tileSize = 70;
   private tileCount = 8;
@@ -60,18 +61,20 @@ export class EstacoesListComponent implements OnInit {
     for (const est in this.listEstacao) {
       if (est) {
 
+        const int_i = est;
+        const id_ext = this.listEstacao[int_i].data._id_ext;
         // Verifica conexão
-        this.http.get('/api/out/estacao/' + this.listEstacao[est].data._id_ext, this.httpOptions).subscribe(updated => {
+        this.http.get('/api/out/estacoes/' + id_ext, this.httpOptions).subscribe(updated => {
           let dado: any;
           dado = updated;
 
           if (dado.erro == null) {
 
-            this.listEstacao[est].api_data = dado.resultado;
-            this.listEstacao[est].is_on = true;
+            this.listEstacao[int_i].api_data = dado.resultado;
+            this.listEstacao[int_i].is_on = true;
           } else {
 
-            this.listEstacao[est].is_on = false;
+            this.listEstacao[int_i].is_on = false;
           }
         });
       }
@@ -82,7 +85,7 @@ export class EstacoesListComponent implements OnInit {
 
   updateEstacao() {
     if (this.talhao_id !== undefined && this.talhao_id != null) {
-      this.http.get('/api/estacao/' + this.talhao_id, this.httpOptions).subscribe(estacoes => {
+      this.http.get('/api/estacao/talhao/' + this.talhao_id, this.httpOptions).subscribe(estacoes => {
 
         for (const est in estacoes) {
           if (est) {
@@ -90,17 +93,14 @@ export class EstacoesListComponent implements OnInit {
             const data = estacoes[est];
             const i = this.listEstacao.length;
 
-            this.http.get('/api/out/estacao/' + data._id_ext, this.httpOptions).subscribe(updated => {
+            this.http.get('/api/out/estacoes/' + data._id_ext, this.httpOptions).subscribe(updated => {
               let dado: any;
               dado = updated;
 
-              console.log('dado');
-              console.log(dado);
-
               if (dado.erro === null) {
-                this.listEstacao.push(new EstacaoCtrl(data, dado.resultado, true, '.'));
+                this.listEstacao.push(new EstacaoCtrl(data, dado.resultado, true, '/estacao/' + data._id));
               } else {
-                this.listEstacao.push(new EstacaoCtrl(data, null, false, '.'));
+                this.listEstacao.push(new EstacaoCtrl(data, null, false, '/estacao/' + data._id));
               }
             });
 
@@ -120,9 +120,13 @@ export class EstacoesListComponent implements OnInit {
       this.breakpoint = Math.ceil(document.getElementById('grid').offsetWidth / this.tileSize);
     }
 
-    setInterval(() => {
+    this.EstacaoUpdateInterval = setInterval(() => {
       this.updateAllEstacoesInfo();
     }, 10000);
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.EstacaoUpdateInterval);
   }
 
   showSnack(x) {
@@ -159,7 +163,6 @@ export class EstacoesListComponent implements OnInit {
 
         this.http.post('/api/estacao', httpOptions).subscribe((resp) => {
           const x = JSON.parse(JSON.stringify(resp));
-          console.log(x);
 
           if (x.success) {
             this.updateEstacao();
