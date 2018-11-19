@@ -669,6 +669,60 @@ router.get('/estadofenestacao/:estacaoid/safra/:safraid', function (req, res) {
 });
 
 /*
+* Busca a média dos sensores das estações de um talhão
+*/
+router.get('/talhao/:talhaoid/sensores/avg', function (req, res) {
+  var token = getToken(req.headers);
+
+  function calculaMedia() {
+    // TODO
+  }
+
+  if (token) {
+    Estacao.find({ 'talhao_id': req.params.talhaoid }).exec(function (err, objs) {
+      if (!err) {
+        if (err) return next(err);
+
+        let done = _.after(objs.length, calculaMedia());
+
+        // Lista de estações
+        objs.forEach(element => {
+
+          request.get(api.APIpath + '/estacoes/' + element._id_ext + '/sensores', { json: true }, (api_err, api_res, api_body) => {
+            if (!api_err) {
+              const sensores = JSON.parse(api_body);
+              if (sensores.erro == null) {
+                sensores.resultado.forEach(sen => {
+                  // TODO
+                });
+              }
+            }
+          });
+
+        });
+      }
+    });
+  } else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
+
+/*
+* Busca a média dos sensores das estações de uma propriedade
+*/
+router.get('/propiedade/:propid/sensores/avg', function (req, res) {
+  var token = getToken(req.headers);
+
+  if (token) {
+    Talhao.find({'propriedade_id':req.params.propid}).exec(function (errT, objsT) {
+
+    });
+  } else {
+    return res.status(403).send({ success: false, msg: 'Não autorizado.' });
+  }
+});
+
+/*
 * Ponte para requisição externa da estação
 */
 router.get('/out/estacoes/:id', function (req, res) {
@@ -677,7 +731,9 @@ router.get('/out/estacoes/:id', function (req, res) {
   if (token) {
 
     request.get(api.APIpath + '/estacoes/' + req.params.id, { json: true }, (api_err, api_res, api_body) => {
-      res.json(api_body);
+      if (!api_err) {
+        res.json(api_body);
+      }
     });
 
   } else {
@@ -694,7 +750,9 @@ router.get('/out/estacoes/:id/sensores', function (req, res) {
   if (token) {
 
     request.get(api.APIpath + '/estacoes/' + req.params.id + '/sensores', { json: true }, (api_err, api_res, api_body) => {
-      res.json(api_body);
+      if (!api_err) {
+        res.json(api_body);
+      }
     });
 
   } else {
@@ -711,7 +769,9 @@ router.get('/out/estacoes/:estacaoid/tipo_sensores/:tiposensorid/ultima_leitura'
   if (token) {
 
     request.get(api.APIpath + '/estacoes/' + req.params.estacaoid + '/tipo_sensores/' + req.params.tiposensorid + '/ultima_leitura', { json: true }, (api_err, api_res, api_body) => {
-      res.json(api_body);
+      if (!api_err) {
+        res.json(api_body);
+      }
     });
 
   } else {

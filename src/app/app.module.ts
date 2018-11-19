@@ -88,7 +88,6 @@ const routes: Routes = [
   { path: 'cultivar', component: CultivarListComponent },
   { path: 'cultivar-reg', component: CultivarRegComponent },
   { path: 'cultivar/:cultivarid', component: CultivarComponent },
-  { path: 'eq', component: EqComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
 
